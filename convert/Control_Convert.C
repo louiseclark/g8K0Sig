@@ -4,15 +4,15 @@
    
    
    // All files
-   //tree->Add("/w/work0/home/louise/rootbeer_output/g8K0Sig/all_trees/*");
+   tree->Add("/w/work0/home/louise/rootbeer_output/g8K0Sig/all_trees/*");
    //tree->Add("/w/work0/home/louise/rootbeer_output/g8K0Sig/all_trees/filepPi021.root");
-   tree->Add("/w/work0/home/louise/rootbeer_output/g8K0Sig/all_trees_MC/filepPi0.root");
+   //tree->Add("/w/work0/home/louise/rootbeer_output/g8K0Sig/all_trees_MC/filepPi0.root");
    
    //Set the ouput directory or file (if full file name is given just 1 file is created, while if a directory it will be created and filled with files of the same name as the input 
    gSystem->Setenv("HSOUT",
 // All files in one file   
 		   //"/scratch/louise/file_all.root");
-		   "/w/work0/home/louise/g8K0Sig/convert_output_MC/filepPi0_MC.root");
+		   "/w/work0/home/louise/g8K0Sig/convert_output3/filepPi0_all.root");
 
    
    //Configure the analysis (i.e PROOF, source compilation...)

@@ -26,6 +26,8 @@
 #include "Convert.h"
 #include <TH2.h>
 #include <TStyle.h>
+#include <Math/VectorUtil.h> //for boosts etc.
+using namespace ROOT::Math::VectorUtil; //Just add VectorUtil:: to functions
 
 void Convert::Begin(TTree * /*tree*/)
 {
@@ -60,15 +62,29 @@ void Convert::SlaveBegin(TTree * /*tree*/)
    fOutTree->Branch("t",&t,"t/D");
 
    fOutTree->Branch("MM_p_pip_pim",&MM_p_pip_pim,"MM_p_pip_pim/D");
+   fOutTree->Branch("MM2_p_pip_pim",&MM2_p_pip_pim,"MM2_p_pip_pim/D");
    fOutTree->Branch("M_pip_pim",&M_pip_pim,"M_pip_pim/D");
+   fOutTree->Branch("M2_pip_pim",&M2_pip_pim,"M2_pip_pim/D");
    fOutTree->Branch("MM_p",&MM_p,"MM_p/D");
+   fOutTree->Branch("MM2_p",&MM2_p,"MM2_p/D");
+   fOutTree->Branch("M_3pi",&M_3pi,"M_3pi/D");
+   fOutTree->Branch("M2_3pi",&M2_3pi,"M2_3pi/D");
    fOutTree->Branch("MM_pip_pim",&MM_pip_pim,"MM_pip_pim/D");
+   fOutTree->Branch("MM2_pip_pim",&MM2_pip_pim,"MM2_pip_pim/D");
    fOutTree->Branch("M_p_pi0",&M_p_pi0,"M_p_pi0/D");
+   fOutTree->Branch("M2_p_pi0",&M2_p_pi0,"M2_p_pi0/D");
    
    // For study of Sigma beam asymmetry
    fOutTree->Branch("phiSigma",&phiSigma,"phiSigma/D");
    fOutTree->Branch("phiK0",&phiK0,"phiK0/D");
    fOutTree->Branch("phiSigmamPhiK0",&phiSigmamPhiK0,"phiSigmamPhiK0/D");
+   
+   // Direction cosines of the decay proton in rest frame of Sigma
+   fOutTree->Branch("cosX",&cosX,"cosX/D");
+   fOutTree->Branch("cosY",&cosY,"cosY/D");
+   fOutTree->Branch("cosZ",&cosZ,"cosZ/D");
+   
+   fOutTree->Branch("costhK0CMS",&costhK0CMS,"costhK0CMS/D");
    
    
    if (!(isSim)) {
@@ -94,6 +110,9 @@ void Convert::SlaveBegin(TTree * /*tree*/)
    THSHisto::LoadCut("Cut_pi0_mass");
    THSHisto::LoadCut("Cut_K0Sig_mass");
    THSHisto::LoadCut("Cut_all");
+   THSHisto::LoadCut("Cut_not_pi0_mass");
+   THSHisto::LoadCut("Cut_not_K0Sig_mass");
+   THSHisto::LoadCut("Cut_not_all");   
    THSHisto::LoadHistograms();
   // cout<<"Louise0"<<endl;
 }
@@ -143,17 +162,51 @@ Bool_t Convert::Process(Long64_t entry)
    lt = new TLorentzVector(1.0,1.0,1.0,1.0);
    *lt = beam->P4() - *lSigma;
    t = -lt->M2();
+   
+   // find direction cosines of decaying proton in rest frame of Sigma
+   // in 'unprimed' coordinate system where z = beam, y = beam x kaon
+   
+   // boost beam, kaon, proton to rest frame of Sigma
+   TVector3 sigRestBV = (*lSigma).BoostVector();
+   TLorentzRotation sigRestRot(-sigRestBV);
+   TLorentzVector sigRestBeam = sigRestRot*(beam->P4());    
+   TLorentzVector sigRestK0   = sigRestRot*(*lK0);
+   TLorentzVector sigRestProt = sigRestRot*(*lProton);
+   
+   // set axes
+   TVector3 zUnpr = sigRestBeam.Vect().Unit();
+   TVector3 yUnpr = sigRestBeam.Vect().Cross(sigRestK0.Vect()).Unit();
+   TVector3 xUnpr = yUnpr.Cross(zUnpr);
+   
+   // direction cosines of proton
+   cosX = TMath::Cos(Angle(sigRestProt.Vect(),xUnpr));
+   cosY = TMath::Cos(Angle(sigRestProt.Vect(),yUnpr));   
+   cosZ = TMath::Cos(Angle(sigRestProt.Vect(),zUnpr));
+   
+
+   // boost K0 to CMS
+   TVector3 cmBV = (beam->P4() + *lTarget).BoostVector();
+   TLorentzVector lK0CM = (*lpip + *lpim);
+   lK0CM.Boost(-cmBV);
+   costhK0CMS = lK0CM.CosTheta();
+   phiK0 = lK0CM.Phi();
 
    // Masses
    MM_p_pip_pim = ((*lTarget + beam->P4()) - (*lProton + *lpip + *lpim)).M(); 
+   MM2_p_pip_pim = ((*lTarget + beam->P4()) - (*lProton + *lpip + *lpim)).M2(); 
    M_pip_pim = (*lpip + *lpim).M(); 
+   M2_pip_pim = (*lpip + *lpim).M2(); 
    MM_p = ((*lTarget + beam->P4()) - *lProton).M(); 
+   MM2_p = ((*lTarget + beam->P4()) - *lProton).M2(); 
+   M_3pi = (*lpip + *lpim + *lpi0).M(); 
+   M2_3pi = (*lpip + *lpim + *lpi0).M2(); 
    MM_pip_pim = ((*lTarget + beam->P4()) - (*lpip + *lpim)).M(); 
+   MM2_pip_pim = ((*lTarget + beam->P4()) - (*lpip + *lpim)).M2(); 
    M_p_pi0 = (*lProton + *lpi0).M();
+   M2_p_pi0 = (*lProton + *lpi0).M2();
 
-   // Angles
-   phiSigma = lSigma->Phi();
-   phiK0 = lK0->Phi();
+   // phi Angles
+   phiSigma = lSigma->Phi();   
    phiSigmamPhiK0 = TVector2::Phi_0_2pi(lSigma->Phi() - lK0->Phi());
 
    // cut events with polarisation not in (0,1)
@@ -163,11 +216,14 @@ Bool_t Convert::Process(Long64_t entry)
    //Int_t kinBin=GetKinBin();//if fHisbins is defined need to give this meaningful arguments
    //EnterKinBinList(kinBin,entry);//save evente in kinematic bins entry lists
    FillHistograms("Cut_PID_only",0);
-   bool pi0_massCut = (MM_p_pip_pim > 0.08 && MM_p_pip_pim < 0.25);
+   bool pi0_massCut = (MM_p_pip_pim > 0.05 && MM_p_pip_pim < 0.22);
    bool K0Sig_massCut = (M_pip_pim > 0.450 && M_pip_pim < 0.550 && MM_pip_pim > 1.150 && MM_pip_pim < 1.250);
    if (pi0_massCut) FillHistograms("Cut_pi0_mass",0);
+   if (!pi0_massCut) FillHistograms("Cut_not_pi0_mass",0);
    if (K0Sig_massCut) FillHistograms("Cut_K0Sig_mass",0);
+   if (!K0Sig_massCut) FillHistograms("Cut_not_K0Sig_mass",0);
    if (pi0_massCut && K0Sig_massCut) FillHistograms("Cut_all",0);
+   if (!(pi0_massCut && K0Sig_massCut)) FillHistograms("Cut_not_all",0);
    
    if (!(pi0_massCut && K0Sig_massCut)) return false;
 
@@ -178,7 +234,7 @@ Bool_t Convert::Process(Long64_t entry)
 
 void Convert::SlaveTerminate()
 {
-   cout << "Dividing " << endl;
+   //cout << "Dividing " << endl;
    //meanPolG->Divide(eventsPolG);
    
    THSOutput::HSSlaveTerminate();
@@ -208,12 +264,40 @@ void Convert::HistogramList(TString sLabel){
   fOutput->Add(MapHist(new TH1F("phiK0"+sLabel,"phiK0"+sLabel, 100, -3.2, 3.2)));
   fOutput->Add(MapHist(new TH1F("hphiSigmamPhiK0"+sLabel,"hphiSigmamPhiK0"+sLabel, 100, -1.0, 1.0)));
 
-  fOutput->Add(MapHist(new TH1F("hMM_p_pip_pim"+sLabel,"hMM_p_pip_pim"+sLabel, 100, 0.0, 2.0)));
-  fOutput->Add(MapHist(new TH1F("hM_pip_pim"+sLabel,"hM_pip_pim"+sLabel, 100, 0.0, 2.0)));
-  fOutput->Add(MapHist(new TH1F("hMM_p"+sLabel,"hMM_p"+sLabel, 100, 0.0, 2.0)));
-  fOutput->Add(MapHist(new TH1F("hMM_pip_pim"+sLabel,"hMM_pip_pim"+sLabel, 100, 0.0, 2.0)));
-  fOutput->Add(MapHist(new TH1F("hM_p_pi0"+sLabel,"hM_p_pi0"+sLabel, 100, 0.0, 2.0)));
-  fOutput->Add(MapHist(new TH2F("hMM_M_pip_pim"+sLabel,"hMM_M_pip_pim"+sLabel, 100, 0.0, 2.0, 100, 0.0, 2.0)));
+  fOutput->Add(MapHist(new TH1F("hMM_p_pip_pim"+sLabel,"hMM_p_pip_pim"+sLabel, 100, 0.0, 0.9)));
+  fOutput->Add(MapHist(new TH1F("hMM2_p_pip_pim"+sLabel,"hMM2_p_pip_pim"+sLabel, 100, -0.25, 0.9)));
+  fOutput->Add(MapHist(new TH1F("hMM_p_pip_pim_z"+sLabel,"hMM_p_pip_pim_z"+sLabel, 100, 0.02, 0.3)));
+  fOutput->Add(MapHist(new TH1F("hMM2_p_pip_pim_z"+sLabel,"hMM2_p_pip_pim_z"+sLabel, 100, 0.0, 0.1)));
+  
+  fOutput->Add(MapHist(new TH1F("hM_pip_pim"+sLabel,"hM_pip_pim"+sLabel, 100, 0.2, 1.4)));
+  fOutput->Add(MapHist(new TH1F("hM2_pip_pim"+sLabel,"hM2_pip_pim"+sLabel, 100, 0.04, 1.96)));
+  fOutput->Add(MapHist(new TH1F("hM_pip_pim_z"+sLabel,"hM_pip_pim_z"+sLabel, 100, 0.3, 0.65)));
+  fOutput->Add(MapHist(new TH1F("hM2_pip_pim_z"+sLabel,"hM2_pip_pim_z"+sLabel, 100, 0.1, 0.45)));
+ 
+  fOutput->Add(MapHist(new TH1F("hMM_p"+sLabel,"hMM_p"+sLabel, 100, 0.0, 1.3)));
+  fOutput->Add(MapHist(new TH1F("hMM2_p"+sLabel,"hMM2_p"+sLabel, 100, 0.0, 1.7)));
+  fOutput->Add(MapHist(new TH1F("hMM_p_z"+sLabel,"hMM_p_z"+sLabel, 100, 0.45, 1.05)));
+  fOutput->Add(MapHist(new TH1F("hMM2_p_z"+sLabel,"hMM2_p"+sLabel, 100, 0.2, 1.1)));
+  
+  fOutput->Add(MapHist(new TH1F("hM_3pi"+sLabel,"hM_3pi"+sLabel, 100, 0.0, 1.5)));
+  fOutput->Add(MapHist(new TH1F("hM2_3pi"+sLabel,"hM2_3pi"+sLabel, 100, 0.0, 2.0)));
+  fOutput->Add(MapHist(new TH1F("hM_3pi_z"+sLabel,"hM_3pi_z"+sLabel, 100, 0.45, 1.05)));
+  fOutput->Add(MapHist(new TH1F("hM2_3pi_z"+sLabel,"hM2_3pi_z"+sLabel, 100, 0.2, 1.1)));
+  
+  fOutput->Add(MapHist(new TH1F("hMM_pip_pim"+sLabel,"hMM_pip_pim"+sLabel, 100, 0.6, 1.8)));
+  fOutput->Add(MapHist(new TH1F("hMM2_pip_pim"+sLabel,"hMM2_pip_pim"+sLabel, 100, 0.36, 3.24)));
+  fOutput->Add(MapHist(new TH1F("hMM_pip_pim_z"+sLabel,"hMM_pip_pim_z"+sLabel, 100, 1.0, 1.4)));
+  fOutput->Add(MapHist(new TH1F("hMM2_pip_pim_z"+sLabel,"hMM2_pip_pim_z"+sLabel, 100, 1.0, 1.8)));
+  
+  fOutput->Add(MapHist(new TH1F("hM_p_pi0"+sLabel,"hM_p_pi0"+sLabel, 100, 1.0, 1.8)));
+  fOutput->Add(MapHist(new TH1F("hM2_p_pi0"+sLabel,"hM2_p_pi0"+sLabel, 100, 1.0, 3.24)));
+  fOutput->Add(MapHist(new TH1F("hM_p_pi0_z"+sLabel,"hM_p_pi0_z"+sLabel, 100, 1.0, 1.4)));
+  fOutput->Add(MapHist(new TH1F("hM2_p_pi0_z"+sLabel,"hM2_p_pi0_z"+sLabel, 100, 1.0, 1.8)));
+  
+  fOutput->Add(MapHist(new TH2F("hMM_M_pip_pim"+sLabel,"hMM_M_pip_pim"+sLabel, 100, 0.2, 1.4, 100, 0.6, 1.8)));
+  fOutput->Add(MapHist(new TH2F("hMM2_M2_pip_pim"+sLabel,"hMM2_M2_pip_pim"+sLabel, 100, 0.04, 1.96, 100, 0.36, 3.24)));
+  fOutput->Add(MapHist(new TH2F("hMM_M_pip_pim_z"+sLabel,"hMM_M_pip_pim"+sLabel, 100, 0.3, 0.65, 100, 1.0, 1.4)));
+  fOutput->Add(MapHist(new TH2F("hMM2_M2_pip_pim_z"+sLabel,"hMM2_M2_pip_pim"+sLabel, 100, 0.1, 0.45, 100, 1.0, 1.8)));
 
   //end of histogram list
   TDirectory::AddDirectory(kTRUE); //back to normal
@@ -227,11 +311,35 @@ void Convert::FillHistograms(TString sCut,Int_t bin){
   //Fill histogram
    // fill mass hists
    FindHist("hMM_p_pip_pim")->Fill(MM_p_pip_pim);
+   FindHist("hMM2_p_pip_pim")->Fill(MM2_p_pip_pim);
    FindHist("hM_pip_pim")->Fill(M_pip_pim);
+   FindHist("hM2_pip_pim")->Fill(M2_pip_pim);
    FindHist("hMM_p")->Fill(MM_p);
+   FindHist("hMM2_p")->Fill(MM2_p);
+   FindHist("hM_3pi")->Fill(M_3pi);
+   FindHist("hM2_3pi")->Fill(M2_3pi);
    FindHist("hMM_pip_pim")->Fill(MM_pip_pim);
+   FindHist("hMM2_pip_pim")->Fill(MM2_pip_pim);
    FindHist("hM_p_pi0")->Fill(M_p_pi0);
+   FindHist("hM2_p_pi0")->Fill(M2_p_pi0);
    (TH2F*)FindHist("hMM_M_pip_pim")->Fill(M_pip_pim,MM_pip_pim);
+   (TH2F*)FindHist("hMM2_M2_pip_pim")->Fill(M2_pip_pim,MM2_pip_pim);
+   
+   // zoomed in versions
+   FindHist("hMM_p_pip_pim_z")->Fill(MM_p_pip_pim);
+   FindHist("hMM2_p_pip_pim_z")->Fill(MM2_p_pip_pim);
+   FindHist("hM_pip_pim_z")->Fill(M_pip_pim);
+   FindHist("hM2_pip_pim_z")->Fill(M2_pip_pim);
+   FindHist("hMM_p_z")->Fill(MM_p);
+   FindHist("hMM2_p_z")->Fill(MM2_p);
+   FindHist("hM_3pi_z")->Fill(M_3pi);
+   FindHist("hM2_3pi_z")->Fill(M2_3pi);
+   FindHist("hMM_pip_pim_z")->Fill(MM_pip_pim);
+   FindHist("hMM2_pip_pim_z")->Fill(MM2_pip_pim);
+   FindHist("hM_p_pi0_z")->Fill(M_p_pi0);
+   FindHist("hM2_p_pi0_z")->Fill(M2_p_pi0);
+   (TH2F*)FindHist("hMM_M_pip_pim_z")->Fill(M_pip_pim,MM_pip_pim);
+   (TH2F*)FindHist("hMM2_M2_pip_pim_z")->Fill(M2_pip_pim,MM2_pip_pim);   
 
    // Fill angle hists
    FindHist("hphiSigmamPhiK0")->Fill(phiSigmamPhiK0);

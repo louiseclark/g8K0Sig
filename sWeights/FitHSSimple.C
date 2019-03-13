@@ -4,22 +4,34 @@
 {
 
   THSsPlot* RF=new THSsPlot("_all");
-  RF->SetOutDir("out_all/");
+  RF->SetOutDir("out_all_pi0/");
  // RF->SetBinnedFit(); //For parameter fits do binned chi2
+  
   ///////////////////////////////Load Variables
-  RF->LoadVariable("M_pip_pim[0.45,0.55]");//should be same name as variable in tree  
-  //RF->LoadVariable("MM_p_pip_pim[0.08,0.24]");//should be same name as variable in tree  
+  
+  // K0
+  //RF->LoadVariable("M_pip_pim[0.45,0.55]");//should be same name as variable in tree  
+  
+  // pi0
+  RF->LoadVariable("MM_p_pip_pim[0.08,0.22]");//should be same name as variable in tree  
 
   /////////////////////////////Make Model Signal
-  RF->Factory("Gaussian::Signal( M_pip_pim, SIMm[0.495,0.45,0.55], SIMw[0.01,0.001,0.02] )");
-  //RF->Factory("Gaussian::Signal( MM_p_pip_pim, SIMm[0.135,0.08,0.24], SIMw[0.01,0.001,0.02] )");
+  
+  //K0
+  //RF->Factory("Gaussian::Signal(M_pip_pim, SIMm[0.495,0.45,0.55], SIMw[0.01,0.001,0.02] )");
+  
+  // pi0
+  RF->Factory("Gaussian::Signal( MM_p_pip_pim, SIMm[0.135,0.08,0.22], SIMw[0.01,0.001,0.02] )");
   RF->LoadSpeciesPDF("Signal");
 
 
   ////////////////////////////////Additional background
-  //RF->Factory("Chebychev::BG(MKpKm,{a0[-0,-10,10],a1[0,-10,10]})");
-  RF->Factory("Chebychev::BG(M_pip_pim,{a0[-0.1,-10,10],a1[0.1,-10,10],a2[0,-10,10]})");
-  //RF->Factory("Chebychev::BG(MM_p_pip_pim,{a0[-0.1,-10,10],a1[0.1,-10,10],a2[0,-10,10]})");
+  
+  // K0
+  //RF->Factory("Chebychev::BG(M_pip_pim,{a0[-0.1,-10,10],a1[0.1,-10,10],a2[0,-10,10]})");
+  
+  // pi0
+  RF->Factory("Chebychev::BG(MM_p_pip_pim,{a0[-0.1,-10,10],a1[0.1,-10,10],a2[0,-10,10]})");
   RF->LoadSpeciesPDF("BG");
 
    ///////////////////////////Load Data
@@ -38,6 +50,6 @@
   gBenchmark->Stop("Simple");
   gBenchmark->Print("Simple");
   RF->GetWeights()->Save();
-  RF->SaveHists("out_all/Hists_all.root");
+  RF->SaveHists("out_all_pi0/Hists_all.root");
 
 }

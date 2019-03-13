@@ -34,19 +34,32 @@ public :
    THSParticle     *beam;
 
    // Louise
-   bool		isSim = true;
+   bool		isSim = false;
    Double_t  eGamma;
    Double_t  t;
    
    Double_t MM_p_pip_pim;		// pi0
+   Double_t MM2_p_pip_pim;		// pi0
    Double_t M_pip_pim;		    // K0 or rho
+   Double_t M2_pip_pim;		    // K0 or rho
    Double_t MM_p;				// omega
+   Double_t MM2_p;				// omega
+   Double_t M_3pi;
+   Double_t M2_3pi;
    Double_t MM_pip_pim;	        // Sigma
+   Double_t MM2_pip_pim;	        // Sigma
    Double_t M_p_pi0;	        // Sigma
+   Double_t M2_p_pi0;	        // Sigma
    
-   Double_t  phiSigma;
-   Double_t  phiK0;
+   Double_t  phiSigma; 
+   Double_t  phiK0; // also angle of production plane wrt para polarization
    Double_t  phiSigmamPhiK0;
+   // Direction cosines of the decay proton in rest frame of Sigma
+   Double_t	 cosX;
+   Double_t  cosY;
+   Double_t  cosZ;
+   
+   Double_t costhK0CMS; // costh of K0 in CMS
 
    TLorentzVector *lTarget;
    TLorentzVector *lt;
