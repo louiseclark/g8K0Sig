@@ -35,7 +35,7 @@
  
   TChain *chainData=new TChain("HSParticles");  
   chainData->Add("/w/work0/home/louise/g8K0Sig/convert_output/filepPi0_all.root");
-  //////////////////////////////Split data into bins and load them
+  //////////////////////////////Split data into bins and load them 
   RF->MakeBinnedTrees(chainData,"Data");
   
   TChain *chainMC=new TChain("HSParticles");  
