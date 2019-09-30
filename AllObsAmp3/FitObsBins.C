@@ -10,7 +10,7 @@
   TString pwd = TString(gSystem->Getenv("PWD"))+"/";
   
   FitManager RF;
-  RF.SetUp().SetOutDir(pwd+"out8_withC/");
+  RF.SetUp().SetOutDir(pwd+"out1/");
   ///////////////////////////////Load Variables  
   RF.SetUp().LoadVariable("phiK0[-3.14,3.14]");//going to fit this
   RF.SetUp().LoadVariable("cosX[-1.0,1.0]");
@@ -21,26 +21,22 @@
   //RF.SetUp().LoadAuxVar("AUX[0,300]"); //Load Aux Var, limits used as cut 
   RF.SetUp().SetIDBranchName("fgID");
 
-  RF.SetUp().LoadFormula("r=sqrt(@a1Re[0.0,-1.0,1.0]*@a1Re[]+@a1Im[0.0,-1.0,1.0]*@a1Im[]+@a2Re[0.0,-1.0,1.0]*@a2Re[]+@a2Im[0.0,-1.0,1.0]*@a2Im[]+@a3Re[0.0,-1.0,1.0]*@a3Re[]+@a3Im[0.0,-1.0,1.0]*@a3Im[]+@a4Re[0.0,-1.0,1.0]*@a4Re[]+@a4Im[0.0,-1.0,1.0]*@a4Im[])");
-  RF.SetUp().LoadFormula("B=((@a1Re[]*@a1Re[]+@a1Im[]*@a1Im[])+(@a2Re[]*@a2Re[]+@a2Im[]*@a2Im[])-(@a3Re[]*@a3Re[]+@a3Im[]*@a3Im[])-(@a4Re[]*@a4Re[]+@a4Im[]*@a4Im[]))/@r[]");
-  RF.SetUp().LoadFormula("T=((@a1Re[]*@a1Re[]+@a1Im[]*@a1Im[])-(@a2Re[]*@a2Re[]+@a2Im[]*@a2Im[])-(@a3Re[]*@a3Re[]+@a3Im[]*@a3Im[])+(@a4Re[]*@a4Re[]+@a4Im[]*@a4Im[]))/@r[]");
-  RF.SetUp().LoadFormula("Ox=2.0*((@a1Re[]*@a4Re[]+@a1Im[]*@a4Im[]+@a2Re[]*@a3Re[]+@a2Im[]*@a3Im[])/@r[])");
-  RF.SetUp().LoadFormula("Oz=2.0*((@a1Im[]*@a4Re[]-@a1Re[]*@a4Im[]+@a2Re[]*@a3Im[]-@a2Im[]*@a3Re[])/@r[])");
-  RF.SetUp().LoadFormula("R=((@a1Re[]*@a1Re[]+@a1Im[]*@a1Im[])-(@a2Re[]*@a2Re[]+@a2Im[]*@a2Im[])+(@a3Re[]*@a3Re[]+@a3Im[]*@a3Im[])-(@a4Re[]*@a4Re[]+@a4Im[]*@a4Im[]))/@r[]");
+  RF.SetUp().LoadFormula("r2=@a1Re[0.0,-1.0,1.0]*@a1Re[]+@a1Im[0.0,-1.0,1.0]*@a1Im[]+@a2Re[0.0,-1.0,1.0]*@a2Re[]+@a2Im[0.0,-1.0,1.0]*@a2Im[]+@a3Re[0.0,-1.0,1.0]*@a3Re[]+@a3Im[0.0,-1.0,1.0]*@a3Im[]+@a4Re[0.0,-1.0,1.0]*@a4Re[]+@a4Im[0.0,-1.0,1.0]*@a4Im[]");
+  RF.SetUp().LoadFormula("B=((@a1Re[]*@a1Re[]+@a1Im[]*@a1Im[])+(@a2Re[]*@a2Re[]+@a2Im[]*@a2Im[])-(@a3Re[]*@a3Re[]+@a3Im[]*@a3Im[])-(@a4Re[]*@a4Re[]+@a4Im[]*@a4Im[]))/@r2[]");
+  RF.SetUp().LoadFormula("T=((@a1Re[]*@a1Re[]+@a1Im[]*@a1Im[])-(@a2Re[]*@a2Re[]+@a2Im[]*@a2Im[])-(@a3Re[]*@a3Re[]+@a3Im[]*@a3Im[])+(@a4Re[]*@a4Re[]+@a4Im[]*@a4Im[]))/@r2[]");
+  RF.SetUp().LoadFormula("Ox=2.0*((@a1Re[]*@a4Re[]+@a1Im[]*@a4Im[]+@a2Re[]*@a3Re[]+@a2Im[]*@a3Im[])/@r2[])");
+  RF.SetUp().LoadFormula("Oz=2.0*((@a1Im[]*@a4Re[]-@a1Re[]*@a4Im[]+@a2Re[]*@a3Im[]-@a2Im[]*@a3Re[])/@r2[])");
+  RF.SetUp().LoadFormula("R=((@a1Re[]*@a1Re[]+@a1Im[]*@a1Im[])-(@a2Re[]*@a2Re[]+@a2Im[]*@a2Im[])+(@a3Re[]*@a3Re[]+@a3Im[]*@a3Im[])-(@a4Re[]*@a4Re[]+@a4Im[]*@a4Im[]))/@r2[]");
 
-  RF.SetUp().LoadFormula("Cx=2.0*((@a1Im[]*@a4Re[]-@a1Re[]*@a4Im[]-@a2Re[]*@a3Im[]+@a2Im[]*@a3Re[])/@r[])");  
-  RF.SetUp().LoadFormula("Cz=2.0*((@a1Re[]*@a4Re[]+@a1Im[]*@a4Im[]-@a2Re[]*@a3Re[]-@a2Im[]*@a3Im[])/@r[])");
+  RF.SetUp().LoadFormula("Cx=2.0*((@a1Im[]*@a4Re[]-@a1Re[]*@a4Im[]-@a2Re[]*@a3Im[]+@a2Im[]*@a3Re[])/@r2[])");  
+  RF.SetUp().LoadFormula("Cz=2.0*((@a1Re[]*@a4Re[]+@a1Im[]*@a4Im[]-@a2Re[]*@a3Re[]-@a2Im[]*@a3Im[])/@r2[])");
   
   /////////////////////////////Make Model Signal
   RF.SetUp().FactoryPDF("ObsFit::LinPolFit(phiK0,cosX,cosY,cosZ,pol,polState,B,T,Ox,Oz,R)");
   RF.SetUp().LoadSpeciesPDF("LinPolFit",1);
 
   ////////////////////////////Make Bins
-  
-  // Uniform bins
-  //RF.Bins().LoadBinVar("costhK0CMS",1,0.33,1.0);
-  //RF.Bins().LoadBinVar("Egamma",1, 1.1, 1.6);
-  
+    
   // Variable bins Egamma 1.1-1.35
   //Double_t binLimits[] = {-1.0, -0.622, -0.39, -0.146, 0.054, 0.298, 1.0};
   //RF.Bins().LoadBinVar("costhK0CMS",6,binLimits);
