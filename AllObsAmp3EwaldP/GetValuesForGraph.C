@@ -4,7 +4,7 @@
 void GetValuesForGraph() {
 	
 	
-	std::string path = "/home/louise/g8K0Sig/code/MCMCamp2EwaldP/out1/";
+	std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3EwaldP/out1/";
 	string eBins[4] = {"1.20","1.50","1.80","2.10"};
 	
 	std::string obs = "R";

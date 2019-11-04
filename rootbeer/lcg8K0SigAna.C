@@ -35,7 +35,7 @@
 #include "TStyle.h"
 #include "TSystem.h"
 #include "TROOT.h"
-#include "/home/louise/g8_phi/haspect/Events/HaSpect/THSParticle.h"
+#include "/home/louise/g8phi/haspect/Events/HaSpect/THSParticle.h"
 #include "extra_packages/eloss_rb/eLoss.h"   
 
 #include <iostream>

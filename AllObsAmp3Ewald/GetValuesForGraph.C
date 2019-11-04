@@ -7,7 +7,7 @@ void GetValuesForGraph() {
 	std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3Ewald/out1/";
 	string eBins[3] = {"1.15","1.35","1.55"};
 	
-	std::string obs = "B";
+	std::string obs = "R";
 	
 	ofstream outfile;
     outfile.open("out1/ValuesForGraph"+obs+".txt");
@@ -54,9 +54,9 @@ void GetValuesForGraph() {
 		yErrString = yErrString.substr(0, yErrString.length()-1) + "]";
 		xString = xString.substr(0, xString.length()-1) + "]";
 		
-		xArrString = xArrString + xString +",\n";
-		yArrString = yArrString + yString +",\n";
-		yErrArrString = yErrArrString + yErrString +",\n";
+		xArrString = xArrString + xString +", # 1.05 - 1.25 \n";
+		yArrString = yArrString + yString +", # 1.25 - 1.45 \n";
+		yErrArrString = yErrArrString + yErrString +", # 1.45 - 1.65 \n";
 		
 		closedir(topDir);
 	}
@@ -65,6 +65,7 @@ void GetValuesForGraph() {
 	yErrArrString = yErrArrString.substr(0, yErrArrString.length()-2) + "]";
 	xArrString = xArrString.substr(0, xArrString.length()-2) + "]";
 	
+	outfile << "# Ewald Sigma bins" << endl;
 	outfile << xArrString << "\n" << endl;
 	outfile << yArrString << "\n" << endl;
 	outfile << yErrArrString << "\n" << endl;
@@ -125,6 +126,7 @@ void GetValuesForGraph() {
 	yErrArrString = yErrArrString.substr(0, yErrArrString.length()-2) + "]";
 	xArrString = xArrString.substr(0, xArrString.length()-2) + "]";
 	
+	outfile << "# Ewald Sigma bins" << endl;
 	outfile << xArrString << "\n" << endl;
 	outfile << yArrString << "\n" << endl;
 	outfile << yErrArrString << "\n" << endl;	

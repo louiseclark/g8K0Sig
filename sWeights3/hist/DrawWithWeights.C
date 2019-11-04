@@ -1,3 +1,5 @@
+#include <string>
+
 // Run with
 // root --hsdata DrawWithWeights.C
 
@@ -50,6 +52,8 @@
   TH1F* bgHistPhiK0Para[4][8];
   TH1F* sigHistPhiK0Perp[4][8];  
   TH1F* bgHistPhiK0Perp[4][8];
+  TH1* sigHistPhiK0Asym[4][8];  
+  TH1* bgHistPhiK0Asym[4][8];
   
   int currentEBin = 0;
   Double_t currentEBinCentre = 0.0;
@@ -96,7 +100,8 @@ void DrawWithWeights() {
  
   TChain chain("HSParticles");
   chain.AddFile("/w/work0/home/louise/g8K0Sig/convert_output/filepPi0_all.root");
-  Double_t fgID,costhK0CMS, Egamma, MM_pip_pim, MM_p_pip_pim, M_pip_pim, MM_p, cosX, cosY, cosZ;
+  Double_t fgID,costhK0CMS, Egamma, MM_pip_pim, MM_p_pip_pim, M_pip_pim, MM_p, cosX, cosY, cosZ, phiK0;
+  Int_t polState;
   chain.SetBranchAddress("fgID",&fgID);
   chain.SetBranchAddress("costhK0CMS",&costhK0CMS);
   chain.SetBranchAddress("Egamma",&Egamma);
@@ -110,7 +115,6 @@ void DrawWithWeights() {
   chain.SetBranchAddress("phiK0",&phiK0);
   chain.SetBranchAddress("polState",&polState);
     
-  gStyle->SetOptStat(1000001);
   // Create histograms
   // binned
   for (Int_t i=0; i<4; i++) {
@@ -175,12 +179,20 @@ void DrawWithWeights() {
 		bgHistCosZ[i][j]->SetLineWidth(2);			
 		
 		// phiK0 PARA		
-		sigHistPhiK0Para[i][j] = new TH1F("Integrated Signal Weight",histTitle.str().c_str(), 75, -3.14, 3.14);		
+		sigHistPhiK0Para[i][j] = new TH1F("Integrated Signal Weight (PARA)",histTitle.str().c_str(), 75, -3.14, 3.14);		
 		sigHistPhiK0Para[i][j]->GetXaxis()->SetTitle("#phi_{K0}");		
-		sigHistCosZ[i][j]->SetLineWidth(2);		
-		bgHistCosZ[i][j] = new TH1F("Integrated BG Weight",histTitle.str().c_str(), 75, -1.0, 1.0);		
-		bgHistCosZ[i][j]->GetXaxis()->SetTitle("cos #theta_{z}");				
-		bgHistCosZ[i][j]->SetLineWidth(2);			
+		sigHistPhiK0Para[i][j]->SetLineWidth(2);		
+		bgHistPhiK0Para[i][j] = new TH1F("Integrated BG Weight  (PARA)",histTitle.str().c_str(), 75, -3.14, 3.14);		
+		bgHistPhiK0Para[i][j]->GetXaxis()->SetTitle("#phi_{K0}");				
+		bgHistPhiK0Para[i][j]->SetLineWidth(2);		
+		
+		// phiK0 PERP
+		sigHistPhiK0Perp[i][j] = new TH1F("Integrated Signal Weight (PERP)",histTitle.str().c_str(), 75, -3.14, 3.14);		
+		sigHistPhiK0Perp[i][j]->GetXaxis()->SetTitle("#phi_{K0}");		
+		sigHistPhiK0Perp[i][j]->SetLineWidth(2);		
+		bgHistPhiK0Perp[i][j] = new TH1F("Integrated BG Weight (PERP)",histTitle.str().c_str(), 75, -3.14, 3.14);		
+		bgHistPhiK0Perp[i][j]->GetXaxis()->SetTitle("#phi_{K0}");				
+		bgHistPhiK0Perp[i][j]->SetLineWidth(2);				
 
 	}
   }
@@ -279,7 +291,19 @@ void DrawWithWeights() {
       // cosZ
       sigHistCosZ[currentEBin][currentThBin]->Fill(cosZ,wts[currentEBin]->GetWeight("Signal"));
       bgHistCosZ[currentEBin][currentThBin]->Fill(cosZ,wts[currentEBin]->GetWeight("BG"));
-
+      
+      // sigHistPhiK0Para
+      if (polState==1) {
+		sigHistPhiK0Para[currentEBin][currentThBin]->Fill(phiK0,wts[currentEBin]->GetWeight("Signal"));
+		bgHistPhiK0Para[currentEBin][currentThBin]->Fill(phiK0,wts[currentEBin]->GetWeight("BG"));
+	  }
+      
+      // sigHistPhiK0Perp
+      if (polState==-1) {
+		sigHistPhiK0Perp[currentEBin][currentThBin]->Fill(phiK0,wts[currentEBin]->GetWeight("Signal"));
+		bgHistPhiK0Perp[currentEBin][currentThBin]->Fill(phiK0,wts[currentEBin]->GetWeight("BG"));
+	  }
+	  
       // unbinned
       // MM_pip_pim
       sigHistMM_pip_pimAll->Fill(MM_pip_pim,wts[currentEBin]->GetWeight("Signal"));
@@ -310,8 +334,95 @@ void DrawWithWeights() {
       bgHistCosZAll->Fill(cosZ,wts[currentEBin]->GetWeight("BG"));
     }
   }
+  
+  // Create asymmetries sigHistPhiK0Asym
+  gStyle->SetOptFit(10111);
+  gStyle->SetOptStat(0);
+  
+  std::string xArrString = "mx=[";
+  std::string yArrString = "my=[";
+  std::string yErrArrString = "my_err=[";
+  
+  for (Int_t i=0; i<4; i++) {
+	  
+	std::string xString = "[";
+	std::string yString = "[";
+	std::string yErrString = "[";
+	  
+	for (Int_t j=0; j<iBinNums[i]; j++) {
+		
+		int rebin_n = 8;
+		
+		std::stringstream histTitle;
+		histTitle << "E_{#gamma} " << eBinLimits[i] << " to " << eBinLimits[i+1] << " GeV   cos(#theta_{K^{0}}) " << thBinLimits[i][j] << " to " << thBinLimits[i][j+1];
+		
+		sigHistPhiK0Para[i][j]->Sumw2();
+		sigHistPhiK0Perp[i][j]->Sumw2();
+		sigHistPhiK0Para[i][j]->Rebin(rebin_n);
+		sigHistPhiK0Perp[i][j]->Rebin(rebin_n);
+			
+		sigHistPhiK0Asym[i][j] = sigHistPhiK0Para[i][j]->GetAsymmetry(sigHistPhiK0Perp[i][j]);
+		sigHistPhiK0Asym[i][j]->SetTitle(histTitle.str().c_str());
+		
+		TF1* cos2phiSig=new TF1("cos2phiSig","[0]-[1]*0.7*cos(2*x)",-3.14,3.14); 
+		sigHistPhiK0Asym[i][j]->Fit("cos2phiSig");
+		
+		double binCentre = (thBinLimits[i][j]+thBinLimits[i][j+1]) / 2.0;
+		double graphValue = cos2phiSig->GetParameter(1);
+		xString = xString + binCentre + ",";
+		yString = yString + graphValue + ",";
+		yErrString = yErrString + cos2phiSig->GetParError(1) + ",";		
+		
+		sigHistPhiK0Asym[i][j]->SetMinimum(-1.5);
+		sigHistPhiK0Asym[i][j]->SetMaximum(1.5);
+		sigHistPhiK0Asym[i][j]->Draw("");
+		
+		TString outFilename = outdir+"sigHistPhiK0Asym"+i+j+".png";
+		c1->SaveAs(outFilename);		
+		
+		bgHistPhiK0Para[i][j]->Sumw2();
+		bgHistPhiK0Perp[i][j]->Sumw2();
+		bgHistPhiK0Para[i][j]->Rebin(rebin_n);
+		bgHistPhiK0Perp[i][j]->Rebin(rebin_n);
+			
+		bgHistPhiK0Asym[i][j] = bgHistPhiK0Para[i][j]->GetAsymmetry(bgHistPhiK0Perp[i][j]);
+		bgHistPhiK0Asym[i][j]->SetTitle(histTitle.str().c_str());
+		
+		TF1* cos2phiBg=new TF1("cos2phiBg","[0]+[1]*0.7*cos(2*x)",-3.14,3.14); 
+		bgHistPhiK0Asym[i][j]->Fit("cos2phiBg");	
+		
+		bgHistPhiK0Asym[i][j]->SetMinimum(-1.0);
+		bgHistPhiK0Asym[i][j]->SetMaximum(1.0);
+		bgHistPhiK0Asym[i][j]->Draw("");
+		outFilename = outdir+"bgHistPhiK0Asym"+i+j+".png";
+		c1->SaveAs(outFilename);
+		
+	}
+	
+	yString = yString.substr(0, yString.length()-1) + "]";
+	yErrString = yErrString.substr(0, yErrString.length()-1) + "]";
+	xString = xString.substr(0, xString.length()-1) + "]";
+
+	xArrString = xArrString + xString +",\n";
+	yArrString = yArrString + yString +",\n";
+	yErrArrString = yErrArrString + yErrString +",\n";
+  }
+
+	yArrString = yArrString.substr(0, yArrString.length()-2) + "]";
+	yErrArrString = yErrArrString.substr(0, yErrArrString.length()-2) + "]";
+	xArrString = xArrString.substr(0, xArrString.length()-2) + "]";
+	
+	ofstream outfile;
+    outfile.open("ValuesForGraph.txt");
+	outfile << xArrString << "\n" << endl;
+	outfile << yArrString << "\n" << endl;
+	outfile << yErrArrString << "\n" << endl;	
+	outfile.close();
+
+
 
   // Save histograms
+  gStyle->SetOptStat(1000001);
   // binned
   for (Int_t i=0; i<4; i++) {
 	for (Int_t j=0; j<iBinNums[i]; j++) {
@@ -370,6 +481,23 @@ void DrawWithWeights() {
 	  bgHistCosZ[i][j]->Draw("HIST");
 	  outFilename = outdir+"bgHistCosZ"+i+j+".png";
 	  c1->SaveAs(outFilename);	  
+
+	  // sigHistPhiK0Para
+	  sigHistPhiK0Para[i][j]->Draw("HIST");
+	  outFilename = outdir+"sigHistPhiK0Para"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  bgHistPhiK0Para[i][j]->Draw("HIST");
+	  outFilename = outdir+"bgHistPhiK0Para"+i+j+".png";
+	  c1->SaveAs(outFilename);	 
+	  
+	  // sigHistPhiK0Perp
+	  sigHistPhiK0Perp[i][j]->Draw("HIST");
+	  outFilename = outdir+"sigHistPhiK0Perp"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  bgHistPhiK0Perp[i][j]->Draw("HIST");
+	  outFilename = outdir+"bgHistPhiK0Perp"+i+j+".png";
+	  c1->SaveAs(outFilename);		
+	  
 	}
   }
   // unbinned
