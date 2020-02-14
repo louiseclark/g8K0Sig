@@ -7,7 +7,7 @@ void GetValuesForGraph() {
 	std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3/out1/";
 	string eBins[4] = {"1.23","1.48","1.73","1.98"};
 	
-	std::string obs = "R";
+	std::string obs = "Oz";
 	
 	ofstream outfile;
     outfile.open("out1/ValuesForGraph"+obs+".txt");

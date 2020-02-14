@@ -936,13 +936,13 @@ void lcg8K0SigAnaToy(int nEvents, char *file, char *outFileName){   // main user
 		      lTrueProton->SetXYZM(MCTK[i].cx*MCTK[i].pmom,MCTK[i].cy*MCTK[i].pmom,MCTK[i].cz*MCTK[i].pmom,PROTON_MASS);
 	      }
 	      if (MCTK[i].id == 211) {
-		      lTruePip->SetXYZM(MCTK[i].cx*MCTK[i].pmom,MCTK[i].cy*MCTK[i].pmom,MCTK[i].cz*MCTK[i].pmom,PROTON_MASS);
+		      lTruePip->SetXYZM(MCTK[i].cx*MCTK[i].pmom,MCTK[i].cy*MCTK[i].pmom,MCTK[i].cz*MCTK[i].pmom,PI_CHARGED_MASS);
 	      }
 	      if (MCTK[i].id == -211) {
-		      lTruePim->SetXYZM(MCTK[i].cx*MCTK[i].pmom,MCTK[i].cy*MCTK[i].pmom,MCTK[i].cz*MCTK[i].pmom,PROTON_MASS);
+		      lTruePim->SetXYZM(MCTK[i].cx*MCTK[i].pmom,MCTK[i].cy*MCTK[i].pmom,MCTK[i].cz*MCTK[i].pmom,PI_CHARGED_MASS);
 	      }
 	      if (MCTK[i].id == 111) {
-		      lTruePi0->SetXYZM(MCTK[i].cx*MCTK[i].pmom,MCTK[i].cy*MCTK[i].pmom,MCTK[i].cz*MCTK[i].pmom,PROTON_MASS);
+		      lTruePi0->SetXYZM(MCTK[i].cx*MCTK[i].pmom,MCTK[i].cy*MCTK[i].pmom,MCTK[i].cz*MCTK[i].pmom,PI_ZERO_MASS);
 	      }
 	  }
 	  hsTrueProton->SetP4(*lTrueProton);

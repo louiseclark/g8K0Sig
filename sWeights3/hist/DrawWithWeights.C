@@ -339,16 +339,24 @@ void DrawWithWeights() {
   gStyle->SetOptFit(10111);
   gStyle->SetOptStat(0);
   
-  std::string xArrString = "mx=[";
-  std::string yArrString = "my=[";
-  std::string yErrArrString = "my_err=[";
+  // Signal
+  std::string xArrString = "masx=[";
+  std::string yArrString = "masy=[";
+  std::string yErrArrString = "masy_err=[";
+  // BG
+  std::string xArrStringBG = "masbx=[";
+  std::string yArrStringBG = "masby=[";
+  std::string yErrArrStringBG = "masby_err=[";  
   
   for (Int_t i=0; i<4; i++) {
 	  
 	std::string xString = "[";
 	std::string yString = "[";
 	std::string yErrString = "[";
-	  
+	std::string xStringBG = "[";
+	std::string yStringBG = "[";
+	std::string yErrStringBG = "[";
+		  
 	for (Int_t j=0; j<iBinNums[i]; j++) {
 		
 		int rebin_n = 8;
@@ -388,8 +396,13 @@ void DrawWithWeights() {
 		bgHistPhiK0Asym[i][j] = bgHistPhiK0Para[i][j]->GetAsymmetry(bgHistPhiK0Perp[i][j]);
 		bgHistPhiK0Asym[i][j]->SetTitle(histTitle.str().c_str());
 		
-		TF1* cos2phiBg=new TF1("cos2phiBg","[0]+[1]*0.7*cos(2*x)",-3.14,3.14); 
+		TF1* cos2phiBg=new TF1("cos2phiBg","[0]-[1]*0.7*cos(2*x)",-3.14,3.14); 
 		bgHistPhiK0Asym[i][j]->Fit("cos2phiBg");	
+		
+		double graphValueBG = cos2phiBg->GetParameter(1);
+		xStringBG = xStringBG + binCentre + ",";
+		yStringBG = yStringBG + graphValueBG + ",";
+		yErrStringBG = yErrStringBG + cos2phiBg->GetParError(1) + ",";				
 		
 		bgHistPhiK0Asym[i][j]->SetMinimum(-1.0);
 		bgHistPhiK0Asym[i][j]->SetMaximum(1.0);
@@ -406,17 +419,33 @@ void DrawWithWeights() {
 	xArrString = xArrString + xString +",\n";
 	yArrString = yArrString + yString +",\n";
 	yErrArrString = yErrArrString + yErrString +",\n";
+	
+	yStringBG = yStringBG.substr(0, yStringBG.length()-1) + "]";
+	yErrStringBG = yErrStringBG.substr(0, yErrStringBG.length()-1) + "]";
+	xStringBG = xStringBG.substr(0, xStringBG.length()-1) + "]";
+
+	xArrStringBG = xArrStringBG + xStringBG +",\n";
+	yArrStringBG = yArrStringBG + yStringBG +",\n";
+	yErrArrStringBG = yErrArrStringBG + yErrStringBG +",\n";	
   }
 
 	yArrString = yArrString.substr(0, yArrString.length()-2) + "]";
 	yErrArrString = yErrArrString.substr(0, yErrArrString.length()-2) + "]";
 	xArrString = xArrString.substr(0, xArrString.length()-2) + "]";
 	
+	yArrStringBG = yArrStringBG.substr(0, yArrStringBG.length()-2) + "]";
+	yErrArrStringBG = yErrArrStringBG.substr(0, yErrArrStringBG.length()-2) + "]";
+	xArrStringBG = xArrStringBG.substr(0, xArrStringBG.length()-2) + "]";	
+	
 	ofstream outfile;
     outfile.open("ValuesForGraph.txt");
 	outfile << xArrString << "\n" << endl;
 	outfile << yArrString << "\n" << endl;
 	outfile << yErrArrString << "\n" << endl;	
+	outfile << "\n" << endl;	
+	outfile << xArrStringBG << "\n" << endl;
+	outfile << yArrStringBG << "\n" << endl;
+	outfile << yErrArrStringBG << "\n" << endl;		
 	outfile.close();
 
 
