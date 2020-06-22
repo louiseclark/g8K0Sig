@@ -1,0 +1,599 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Analysis Summary</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+<header>
+  <nav class="main-nav">
+    <ul>
+      <li>
+        <ul>
+<!--
+		  <li><a href="index.html" class="active">about</a></li>
+          <li><a href="projets.html">works</a></li>
+          <li><a href="contact.html">Contact</a></li>
+-->		  
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</header>
+<section id="video" class="home">
+  <h1>Photoproduction Polarization Observables from g8</h1>
+  <h2>Louise Clark</h2>
+</section>
+<section id="main-content">
+  <div class="text-intro">
+    <h2>Analysis Summary</h2>
+  </div>
+  
+  <div class="text-intro">
+    <h3>Reaction channel</h3>
+	<p><IMAGE src="images/reaction.png"></IMAGE>
+	</p>  
+  </div>
+  
+  <div class="text-intro">
+    <h3>Initial particle ID</h3>
+	<p>Rootbeer used to identify events with final state p &pi;<sup>+</sup> &pi;<sup>-</sup> (&pi;<sup>0</sup>)<BR>
+	</p>
+	<TABLE class="pure-table">
+	<thead>
+	<TR><TD>Step/Cut<TD>Details<TD>Number of events
+	</thead>
+	<tbody>
+	<TR><TD>Initial skim<TD>DST files skimmed for 2 or more charged particles</TD><TD>
+	<TR><TD>3 or 4 particles in final state<TD>Allows for &pi;<sup>0</sup> undetected<TD>6.04 x 10<sup>8</sup>
+	<TR><TD>Vertex z</TD><TD>-40.0 < v<sub>z</sub> < 0.0</TD><TD></TD></TR>
+	<TR><TD>Mass cuts</TD><TD>0.49 < m<sup>2</sup>(p) < 1.44<BR>
+							  m<sup>2</sup>(&pi;<sup>+/-</sup>) < 0.09</TD><TD>2.44 x 10<sup>8</sup></TD></TR>
+    <TR><TD>Vertex time of photon and proton</TD><TD>|Vertex time(best photon) - Vertex time(proton)| < 1.0 ns<BR>
+														Best photon is that which minimizes vertex time difference between photon and proton</TD><TD>1.48 x 10<sup>8</sup></TD></TR>	
+    <TR><TD>Polarization</TD><TD>Entry exists in polarization tables<TD>5.06 x 10<sup>7</sup></TD></TR>		
+    <TR><TD>Polarization correction</TD><TD>Polarization value corrected according to Mike Test<TD></TD></TR>		
+    <TR><TD>Energy correction</TD><TD>eloss applied to final state 4-vectors<TD></TD></TR>
+	</tbody>
+	</TABLE>
+		
+  </div>
+  <div class="columns features">
+    <div class="one-third first">
+      <h3>Plots by coherent edge</h3>
+      <p><a href="plots.html?p_file_list=rb13.txt&p_width=50" class="more">1.3 GeV</a></p>
+      <p><a href="plots.html?p_file_list=rb15.txt&p_width=50" class="more">1.5 GeV</a></p>
+      <p><a href="plots.html?p_file_list=rb17.txt&p_width=50" class="more">1.7 GeV</a></p>
+      <p><a href="plots.html?p_file_list=rb19.txt&p_width=50" class="more">1.9 GeV</a></p>
+      <p><a href="plots.html?p_file_list=rb21.txt&p_width=50" class="more">2.1 GeV</a></p>
+    </div>
+    <div class="one-third">
+      <h3>Plots by category</h3>
+      <p><a href="plots.html?p_file_list=rb_bm.txt&p_width=50" class="more">Beta vs momentum</a></p>
+      <p><a href="plots.html?p_file_list=rb_vz.txt&p_width=50" class="more">Vertex z</a></p>
+      <p><a href="plots.html?p_file_list=rb_mul.txt&p_width=50" class="more">Multiplicity</a></p>
+      <p><a href="plots.html?p_file_list=rb_el.txt&p_width=50" class="more">eloss</a></p>
+	  <p><a href="plots.html?p_file_list=rb_vt.txt&p_width=50" class="more">Vertex time</a></p>
+      <p><a href="plots.html?p_file_list=rb_pe.txt&p_width=50" class="more">Photon energy</a></p>
+      <p><a href="plots.html?p_file_list=rb_mp.txt&p_width=100" class="more">Mean polarization</a></p>
+    </div>
+    <div class="one-third">
+      <h3>Useful links</h3>
+      <p>Some text Some text Some text Some text Some text Some text Some text Some text Some text </p>
+      <p><a href="#" class="more">Add some useful links here</a></p>
+    </div>
+  </div>
+
+
+
+  <div class="text-intro">
+    <h3>Channel ID</h3>
+	<p>4-vectors output from Initial particle ID step analysed using Haspect framework<BR>
+	   Select events compatible with the channel <i>&gamma; p &#8594; K<sup>0</sup> &Sigma;<sup>+</sup></sup></i>
+	</p>
+	<TABLE class="pure-table">
+	<thead>
+	<TR><TD>Step/Cut<TD>Details<TD>Number of events
+	</thead>
+	<tbody>
+	<TR><TD>After PID</TD><TD>As above</TD><TD>5.06 x 10<sup>7</sup></TD></TR>
+	<TR><TD>Valid polarisation degree</TD><TD>Polarisation degree &#8712; (0,1)</TD><TD>4.81 x 10<sup>7</sup></TD></TR>
+	<TR><TD>&pi;<sup>0</sup> mass</TD><TD>0.05 GeV < Missing mass(<i>p &pi;<sup>+</sup> &pi;<sup>-</sup></i>) < 0.22 GeV</TD><TD>9.94 x 10<sup>6</sup></TD></TR>
+	<TR><TD>K<sup>0</sup> &Sigma;<sup>+</sup> masses</TD><TD>K<sup>0</sup>:&emsp; 0.450 GeV &emsp; < &emsp; Mass(&pi;<sup>+</sup> &pi;<sup>-</sup>) &emsp; < &emsp;0.550 GeV<BR>
+															 &Sigma;<sup>+</sup>:&emsp; 1.150 GeV &emsp; < &emsp; Missing mass(&pi;<sup>+</sup> &pi;<sup>-</sup>) &emsp; < &emsp; 1.250 GeV</TD><TD>1.15 x 10<sup>6</sup></TD></TR>
+	</tbody>
+	</TABLE>
+		
+  </div>
+  <div class="columns features">
+    <div class="one-third first">
+      <h3>Plots by mass</h3>
+      <p><a href="plots.html?p_file_list=cvMM_p_pip_pim.txt&p_width=50" class="more">&pi;<sup>0</sup>: Missing Mass(p &pi;<sup>+</sup>&pi;<sup>-</sup>)</a></p>
+      <p><a href="plots.html?p_file_list=cvM_pip_pim.txt&p_width=50" class="more">K<sup>0</sup>: Mass(&pi;<sup>+</sup>&pi;<sup>-</sup>)</a></p>
+      <p><a href="plots.html?p_file_list=cvMM_p.txt&p_width=50" class="more">3 &pi;: Missing Mass(p)</a></p>
+      <p><a href="plots.html?p_file_list=cvMM_pip_pim.txt&p_width=50" class="more">&Sigma;<sup>+</sup>: Missing Mass(&pi;<sup>+</sup>&pi;<sup>-</sup>)</a></p>
+      <p><a href="plots.html?p_file_list=cvM_p_pi0.txt&p_width=50" class="more">&Sigma;<sup>+</sup>: Mass(p &pi;<sup>0</sup>)</a></p>
+      <p><a href="plots.html?p_file_list=cvMM_M_pip_pim.txt&p_width=50" class="more">&Sigma;<sup>+</sup> vs K<sup>0</sup>: Missing Mass(&pi;<sup>+</sup>&pi;<sup>-</sup>) vs Mass(&pi;<sup>+</sup>&pi;<sup>-</sup>)</a></p>
+    </div>
+    <div class="one-third">
+      <h3>Plots by cuts</h3>
+      <p><a href="plots.html?p_file_list=cvPIDonly.txt&p_width=50" class="more">PID Only</a></p>
+      <p><a href="plots.html?p_file_list=cvPi0Cut.txt&p_width=50" class="more">After &pi;<sup>0</sup> mass cut</a></p>
+      <p><a href="plots.html?p_file_list=cvK0SigCut.txt&p_width=50" class="more">After K<sup>0</sup> &Sigma;<sup>+</sup> mass cuts</a></p>
+      <p><a href="plots.html?p_file_list=cvAllCuts.txt&p_width=50" class="more">After all mass cuts</a></p>
+    </div>
+    <div class="one-third">
+      <h3>Plots by variable</h3>
+      <p>Some text Some text Some text Some text Some text Some text Some text Some text Some text </p>
+      <p><a href="plots.html?p_file_list=cvVars.txt&p_width=50" class="more">All plots</a></p>
+    </div>
+  </div>
+  
+
+
+  <div class="text-intro">
+    <h3>Simulation</h3>
+	<p>Phase generator EdGen<BR>
+	g8 simulation and reconstruction
+	</p>
+	<TABLE class="pure-table">
+	<thead>
+	<TR><TD>Step<TD>Details<TD>Number of events
+	</thead>
+	<tbody>
+	<TR><TD valign="top">Event generation</TD>
+		<TD>Vertices for the channel provided as input to EdGen with appropriate mean lifetimes for &Sigma;<sup>+</sup> and K<sup>0</sup> for detached vertices<BR><BR>
+Vertex n. 1, Origin (Beam + Tg) --> (pid=3222 1.189e+00 GeV)  + (pid=310 4.976e-01 GeV) <BR>
+Vertex n. 2, Origin (pid=3222 1.189e+00 GeV,  Lifetime=8.018e-11) --> (pid=2212 9.383e-01 GeV)  + (pid=111 1.350e-01 GeV)  <BR>
+Vertex n. 3, Origin (pid=310 4.976e-01 GeV,  Lifetime=8.927e-11) --> (pid=211 1.396e-01 GeV)  + (pid=-211 1.396e-01 GeV)<BR><BR>
+		Energy range 1.1 - 2.1 GeV
+		</TD>
+		<TD valign="top">4.0 x 10<sup>6</sup></TD></TR>
+	<TR>
+		<TD>g8 simulation and reconstruction</TD>
+		<TD></TD>
+		<TD>3.28 x 10<sup>5</sup></TD></TR>
+	</tbody>
+	</TABLE>
+		
+  </div>
+  <div class="columns features">
+    <div class="one-third first">
+      <h3>Plots by mass</h3>
+      <p><a href="plots.html?p_file_list=cvMCMM_p_pip_pim.txt&p_width=50" class="more">&pi;<sup>0</sup>: Missing Mass(p &pi;<sup>+</sup>&pi;<sup>-</sup>)</a></p>
+      <p><a href="plots.html?p_file_list=cvMCM_pip_pim.txt&p_width=50" class="more">K<sup>0</sup>: Mass(&pi;<sup>+</sup>&pi;<sup>-</sup>)</a></p>
+      <p><a href="plots.html?p_file_list=cvMCMM_p.txt&p_width=50" class="more">3 &pi;: Missing Mass(p)</a></p>
+      <p><a href="plots.html?p_file_list=cvMCMM_pip_pim.txt&p_width=50" class="more">&Sigma;<sup>+</sup>: Missing Mass(&pi;<sup>+</sup>&pi;<sup>-</sup>)</a></p>
+      <p><a href="plots.html?p_file_list=cvMCM_p_pi0.txt&p_width=50" class="more">&Sigma;<sup>+</sup>: Mass(p &pi;<sup>0</sup>)</a></p>
+      <p><a href="plots.html?p_file_list=cvMCMM_M_pip_pim.txt&p_width=50" class="more">&Sigma;<sup>+</sup> vs K<sup>0</sup>: Missing Mass(&pi;<sup>+</sup>&pi;<sup>-</sup>) vs Mass(&pi;<sup>+</sup>&pi;<sup>-</sup>)</a></p>
+    </div>
+    <div class="one-third">
+      <h3>Simulation vs data</h3>
+      <p><a href="plots.html?p_file_list=cvMCvDataVars.txt&p_width=50" class="more">All plots</a></p>
+    </div>
+    <div class="one-third">
+      <h3>Useful links</h3>
+      <p>Some text Some text Some text Some text Some text Some text Some text Some text Some text </p>      
+      <p><a href="https://github.com/lorenzozana/EdGen#edgen-event-generator" class="more">EdGen Event Generator</a></p>
+    </div>
+  </div>  
+  
+  <div class="text-intro">
+    <h3>sPlots</h3>
+	<p>Signal and background weights assigned using sPlots by fitting the &pi;<sup>0</sup> and K<sup>0</sup> masses 
+	</p>
+	<TABLE class="pure-table">
+	<thead>
+	<TR><TD>Step<TD>Details
+	</thead>
+	<tbody>
+	<TR><TD valign="top">Fit &pi;<sup>0</sup> mass</TD>
+		<TD>Fit Missing Mass(p &pi;<sup>+</sup> &pi;<sup>-</sup>) around the &pi;<sup>0</sup> mass as gaussian peak on chebychev polynomial background
+		</TD>
+	<TR><TD>Fit K<sup>0</sup> mass</TD>
+		<TD>Use weights from &pi;<sup>0</sup> mass fit to plot and fit Mass(&pi;<sup>+</sup> &pi;<sup>+</sup>) around the K<sup>0</sup> mass as gaussian peak on chebychev polynomial background</TD>
+	<TR><TD>Binning</TD>
+	<TD>Bin in 21 bins in E<sub>&gamma;</sub> and cos &theta;<sub>K<sup>0</sup></sub> to produce integrated signal weight of approximately 1000 per bin<BR>
+	Total integrated signal is approximately 24,000<BR><BR>
+	<image src="images/sWeights/21bins.png" width="80%" height="80%"></image></TD>
+	</tbody>
+	</TABLE>
+		
+  </div>
+  <div class="columns features">
+    <div class="one-third first">
+      <h3>sPlots fits by mass</h3>
+      <p><a href="plots.html?p_file_list=swAllpi0.txt&p_width=50" class="more">&pi;<sup>0</sup> fits</a></p>
+      <p><a href="plots.html?p_file_list=swAllK0.txt&p_width=50" class="more">K<sup>0</sup> fits</a></p>
+    </div>
+    <div class="one-third">
+      <h3>sPlots fits by E<sub>&gamma;</sub> bin</h3>
+      <p><a href="plots.html?p_file_list=swEgamma1.23.txt&p_width=50" class="more">E<sub>&gamma;</sub> = 1.23 GeV</a></p>
+      <p><a href="plots.html?p_file_list=swEgamma1.48.txt&p_width=50" class="more">E<sub>&gamma;</sub> = 1.48 GeV</a></p>
+      <p><a href="plots.html?p_file_list=swEgamma1.73.txt&p_width=50" class="more">E<sub>&gamma;</sub> = 1.73 GeV</a></p>
+      <p><a href="plots.html?p_file_list=swEgamma1.98.txt&p_width=50" class="more">E<sub>&gamma;</sub> = 1.98 GeV</a></p>
+    </div>
+    <div class="one-third">
+      <h3>Useful links</h3>
+      <p>sPlot: a statistical tool to unfold data distributions</p>      
+      <p><a href="https://arxiv.org/abs/physics/0402083" class="more">View</a></p>
+    </div>
+  </div>    
+
+  <div class="columns features">
+   <div class="text-intro"><h3>Weighted plots</h3>
+   </div>
+    <div class="one-third first">
+      <h3>All events</h3>
+      <p><a href="plots.html?p_file_list=wtAllMass.txt&p_width=50" class="more">Mass distributions</a></p>
+      <p><a href="plots.html?p_file_list=wtAllAng.txt&p_width=50" class="more">Angular distributions</a></p>
+    </div>
+    <div class="one-third">
+      <h3>Binned plots by category</h3>
+      <p><a href="plots.html?p_file_list=images/weighted/wtBinnedMassSig.txt&p_width=50" class="more">Signal Mass distributions</a></p>
+      <p><a href="plots.html?p_file_list=images/weighted/wtBinnedAngSig.txt&p_width=50" class="more">Signal Angular distributions</a></p>
+      <p><a href="plots.html?p_file_list=images/weighted/wtBinnedMassBg.txt&p_width=50" class="more">Background Mass distributions</a></p>
+      <p><a href="plots.html?p_file_list=images/weighted/wtBinnedAngBg.txt&p_width=50" class="more">Background Angular distributions</a></p>
+    </div>  
+    <div class="one-third">
+      <h3>Binned plots by bin</h3>
+      <p><a href="plots.html?p_file_list=images/weighted/wtBinnedSig.txt&p_width=50" class="more">Signal distributions</a></p>
+      <p><a href="plots.html?p_file_list=images/weighted/wtBinnedBg.txt&p_width=50" class="more">Background distributions</a></p>
+	</div>
+  </div>    
+  
+  <div class="text-intro">
+    <h3>Fit distribution and extract observables</h3>
+	<p>PDFs for observables are extracted using MCMC
+	</p>
+	<table class="pure-table">
+	<thead>
+	<tr><td>Step</td><td>Details
+	</td></tr></thead>
+	<tbody>
+	<tr><td valign="top">Distribution dependence on kinematic variables and observables</td>
+					<td><img src="images/dist.PNG" width="100%" height="100%"></td>
+	</tr>
+	<tr><td valign="top">MCMC steps in observable space are constructed using normalised transversity amplitudes as per Vrancx (2018)</td>
+					<td><i>&Sigma;</i> = <i>r</i><sub>1</sub><sup>2</sup> + <i>r</i><sub>2</sub><sup>2</sup> - <i>r</i><sub>3</sub><sup>2</sup> - <i>r</i><sub>4</sub><sup>2</sup><BR>
+						<i>P</i> = <i>r</i><sub>1</sub><sup>2</sup> - <i>r</i><sub>2</sub><sup>2</sup> - <i>r</i><sub>3</sub><sup>2</sup> + <i>r</i><sub>4</sub><sup>2</sup><BR>
+									<i>T</i> = <i>r</i><sub>1</sub><sup>2</sup> - <i>r</i><sub>2</sub><sup>2</sup> + <i>r</i><sub>3</sub><sup>2</sup> - <i>r</i><sub>4</sub><sup>2</sup><BR>
+									<i>O<sub>x</sub></i> = 2Re(<i>a</i><sub>1</sub><i>a</i><sub>4</sub><sup>*</sup> + <i>a</i><sub>2</sub><i>a</i><sub>3</sub><sup>*</sup>)<BR>
+									<i>O<sub>z</sub></i> = 2Im(<i>a</i><sub>1</sub><i>a</i><sub>4</sub><sup>*</sup> - <i>a</i><sub>2</sub><i>a</i><sub>3</sub><sup>*</sup>)<BR>        </tr>
+	</tr></tbody>
+	</table>	
+<B>Task 1 Systematic checks</B><BR>
+Investigate effect of changing sWeight fit ranges and MCMC parameters on observable values obtained (particularly those observables measuring close to 1)<BR>
+<B>Task 2 Improve simulation</B><BR>
+Weight the simulation to replicate Egamma and t distributions in the data<BR>
+Add 3pi background<BR>
+Use 3pi background for sWeights background instead of fitting polynomial? - not needed<BR>
+<B>Task 3 Toy studies</B><BR>
+Current comparison is for minuit fit on 5 sets of toy data<BR>
+Generate more toy so can plot gaussian for each observable and bin<BR>
+Run toy data through same MCMC study as done for real data<BR>
+Generate toy for other values of observables?<BR>
+Redo toy studies with 3pi background included <BR>
+<B>Task 4 </B><BR>
+Work to date has uniform Egamma bins and variable size costhK0 bins - can see costh dependence - redo with uniform costhK0 bins and variable size Egamma bins to see energy dependence<BR>
+  </div>
+  
+  <div class="columns features">
+   <div class="text-intro"><h3>Integrated distributions from MCMC study</h3>
+   </div>
+    <div class="one-third first">
+      <h3>Grouped by bin</h3></h3>
+      <p><a href="plots.html?p_file_list=images/MCMCFits/E0all.txt&p_width=50" class="more">E<sub>&gamma;</sub> bin 1.1 to 1.35 GeV</a></p>
+      <p><a href="plots.html?p_file_list=images/MCMCFits/E1all.txt&p_width=50" class="more">E<sub>&gamma;</sub> bin 1.35 to 1.6 GeV</a></p>
+      <p><a href="plots.html?p_file_list=images/MCMCFits/E2all.txt&p_width=50" class="more">E<sub>&gamma;</sub> bin 1.6 to 1.85 GeV</a></p>
+      <p><a href="plots.html?p_file_list=images/MCMCFits/E3all.txt&p_width=50" class="more">E<sub>&gamma;</sub> bin 1.85 to 2.1 GeV</a></p>
+    </div>
+    <div class="one-third">
+      <h3>Grouped by variable</h3>
+      <p><a href="plots.html?p_file_list=images/MCMCFits/cosX.txt&p_width=50" class="more">cosX</a></p>
+      <p><a href="plots.html?p_file_list=images/MCMCFits/cosY.txt&p_width=50" class="more">cosY</a></p>
+      <p><a href="plots.html?p_file_list=images/MCMCFits/cosZ.txt&p_width=50" class="more">cosZ</a></p>
+      <p><a href="plots.html?p_file_list=images/MCMCFits/phiK0.txt&p_width=50" class="more">phiK0</a></p>
+      <p><a href="plots.html?p_file_list=images/MCMCFits/pol.txt&p_width=50" class="more">pol</a></p>
+    </div>  
+    <div class="one-third">
+      <h3>More</h3>
+      <p>Placeholder text Placeholder text Placeholder text Placeholder text Placeholder text Placeholder text Placeholder text</p>
+	</div>
+  </div>     
+  
+     <div class="columns features">
+   <div class="text-intro"><h3>PDFs from MCMC study</h3>
+   </div>
+    <div class="one-third first">
+      <h3>Grouped by bin</h3></h3>
+      <p><a href="plots.html?p_file_list=images/MCMCPdfs/E0all.txt&p_width=50" class="more">E<sub>&gamma;</sub> bin 1.1 to 1.35 GeV</a></p>
+      <p><a href="plots.html?p_file_list=images/MCMCPdfs/E1all.txt&p_width=50" class="more">E<sub>&gamma;</sub> bin 1.35 to 1.6 GeV</a></p>
+      <p><a href="plots.html?p_file_list=images/MCMCPdfs/E2all.txt&p_width=50" class="more">E<sub>&gamma;</sub> bin 1.6 to 1.85 GeV</a></p>
+      <p><a href="plots.html?p_file_list=images/MCMCPdfs/E3all.txt&p_width=50" class="more">E<sub>&gamma;</sub> bin 1.85 to 2.1 GeV</a></p>
+    </div>
+    <div class="one-third">
+      <h3>Grouped by observable</h3>
+      <p><a href="plots.html?p_file_list=images/MCMCPdfs/B.txt&p_width=50" class="more">Beam Asymmetry</a></p>
+      <p><a href="plots.html?p_file_list=images/MCMCPdfs/R.txt&p_width=50" class="more">Recoil</a></p>
+      <p><a href="plots.html?p_file_list=images/MCMCPdfs/Ox.txt&p_width=50" class="more">Ox</a></p>
+      <p><a href="plots.html?p_file_list=images/MCMCPdfs/Oz.txt&p_width=50" class="more">Oz</a></p>
+      <p><a href="plots.html?p_file_list=images/MCMCPdfs/T.txt&p_width=50" class="more">Target</a></p>
+      <p><a href="plots.html?p_file_list=images/MCMCPdfs/Cx.txt&p_width=50" class="more">Cx</a></p>
+      <p><a href="plots.html?p_file_list=images/MCMCPdfs/Cz.txt&p_width=50" class="more">Cz</a></p>
+    </div>  
+    <div class="one-third">
+      <h3>More</h3>
+      <p>Placeholder text Placeholder text Placeholder text Placeholder text Placeholder text Placeholder text Placeholder text</p>
+	</div>
+  </div>  
+  
+   <div class="columns features">
+   <div class="text-intro"><h3>All plots by bin</h3>
+   </div>
+    <div class="one-third first">
+      <h3>E<sub>&gamma;</sub> 1.1 to 1.35 GeV</h3></h3>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin00.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) -1 to -0.622</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin01.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) -0.622 to -0.39</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin02.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) -0.39 to -0.146</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin03.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) -0.146 to 0.054</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin04.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) 0.054 to 0.298</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin05.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) 0.298 to 1</a></p>
+      
+    </div>
+    <div class="one-third">
+      <h3>E<sub>&gamma;</sub> 1.35 to 1.6 GeV</h3>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin10.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) -1 to -0.465</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin11.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) -0.465 to -0.275</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin12.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) -0.275 to -0.135</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin13.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) -0.135 to 0.005</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin14.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) 0.005 to 0.165</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin15.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) 0.165 to 0.345</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin16.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) 0.345 to 0.535</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin17.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) 0.535 to 1</a></p>
+    </div>  
+    <div class="one-third">
+      <h3>E<sub>&gamma;</sub> 1.6 to 1.85 GeV</h3></h3>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin20.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) -1 to -0.175</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin21.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) -0.175 to 0.035</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin22.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) 0.035 to 0.295</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin23.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) 0.295 to 0.505</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin24.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) 0.505 to 1</a></p>
+	</div>
+  </div>   
+    <div class="one-third first">
+      <h3>E<sub>&gamma;</sub> 1.85 to 2.1 GeV</h3></h3>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin20.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) -1 to 0.155</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin/bin21.txt&p_width=50" class="more">cos(&theta;<sub>K0</sub>) 0.155 to 1</a></p>
+	</div>
+  </div>   
+  
+  
+    <div class="columns features">
+   <div class="text-intro"><h3>Systematics</h3>
+   </div>
+   
+   	<TABLE class="pure-table">
+	<thead>
+	<TR><TD><TD>Description</TD><TD>Pion mass fit range<TD>Kaon mass fit range<TD>Kaon fit background shape<TD>MCMC Proposal<TD>&Sigma; mass cut<TD>MCMC step size
+	
+	</thead>
+	<tbody>
+
+	<TR><TD>Baseline<TD><TD>0.08 - 0.22 GeV<TD>0.45 - 0.55 GeV<TD>Chebychev degree 2<TD>Uniform to Sequential<TD><TD>2
+	<TR><TD>Test 3<TD>Vary K0 fit range<TD>0.08 - 0.22 GeV<TD>0.4625 - 0.535 GeV<TD>Chebychev degree 2<TD>Uniform to Sequential<TD><TD>2
+	<TR><TD>Test 2<TD>Vary K0 fit range<TD>0.08 - 0.22 GeV<TD>0.475- 0.52 GeV<TD>Chebychev degree 2<TD>Uniform to Sequential<TD><TD>2
+	<TR><TD>Test 4<TD>Vary K0 fit range<TD>0.08 - 0.22 GeV<TD>0.48 - 0.515 GeV<TD>Chebychev degree 2<TD>Uniform to Sequential<TD><TD>2
+	<TR><TD>Test 5<TD>Narrow &pi;<sup>0</sup> fit range<TD>0.08 - 0.185 GeV<TD>0.45 - 0.55 GeV<TD>Chebychev degree 2<TD>Sequential<TD><TD>2
+	<TR><TD>Test 6<TD>Cut around &Sigma; mass<TD>0.08 - 0.22 GeV<TD>0.45 - 0.55 GeV<TD>Chebychev degree 2<TD>Sequential<TD>1.16-1.22 GeV<TD>2
+	<TR><TD>Test 7<TD>Widen &pi;<sup>0</sup> fit range<TD>0.055 - 0.22 GeV<TD>0.45 - 0.55 GeV<TD>Chebychev degree 2<TD>Sequential<TD><TD>2
+	<TR><TD>Test 8<TD>Narrow K<sup>0</sup> fit range with linear background<TD>0.08 - 0.22 GeV<TD>0.48 - 0.515 GeV<TD>Chebychev degree 1<TD>Sequential<TD><TD>2
+	<TR><TD>Test 9<TD>Bin sWeights in cosX<TD>0.055 - 0.22 GeV<TD>0.48 - 0.515 GeV<BR>~20% fits failed<TD>Chebychev degree 1<TD>Sequential<TD><TD>2
+	<TR><TD>Test 10<TD>Bin sWeights in cosX<TD>0.055 - 0.22 GeV<TD>0.48 - 0.515 GeV<BR>(K0 mean and width fixed)<TD>Chebychev degree 1<TD>Sequential<TD><TD>2
+	<TR><TD>Test 11<TD>Vary MCMC step size<TD>0.055 - 0.22 GeV<TD>0.45 - 0.55 GeV<TD>Chebychev degree 2<TD>Sequential<TD><TD>0.5
+	<TR><TD>Test 12<TD>Vary MCMC step size<TD>0.055 - 0.22 GeV<TD>0.45 - 0.55 GeV<TD>Chebychev degree 2<TD>Sequential<TD><TD>8
+	</tbody>
+
+	</TABLE>
+	
+	<p><IMAGE src="images/st_compare/B1.png" width="45%"></IMAGE>
+	   <IMAGE src="images/st_compare/B2.png" width="45%"></IMAGE></p>
+	<p><IMAGE src="images/st_compare/B1_unc.png" width="45%"></IMAGE>
+	   <IMAGE src="images/st_compare/B2_unc.png" width="45%"></IMAGE></p>
+	<p><IMAGE src="images/st_compare/Ox1.png" width="45%"></IMAGE>
+	   <IMAGE src="images/st_compare/Ox2.png" width="45%"></IMAGE></p>
+	<p><IMAGE src="images/st_compare/Ox1_unc.png" width="45%"></IMAGE>
+	   <IMAGE src="images/st_compare/Ox2_unc.png" width="45%"></IMAGE></p>
+	<p><IMAGE src="images/st_compare/Oz1.png" width="45%"></IMAGE>
+	   <IMAGE src="images/st_compare/Oz2.png" width="45%"></IMAGE></p>
+	<p><IMAGE src="images/st_compare/Oz1_unc.png" width="45%"></IMAGE>
+	   <IMAGE src="images/st_compare/Oz2_unc.png" width="45%"></IMAGE></p>
+	<p><IMAGE src="images/st_compare/P1.png" width="45%"></IMAGE>
+	   <IMAGE src="images/st_compare/P2.png" width="45%"></IMAGE></p>
+	<p><IMAGE src="images/st_compare/P1_unc.png" width="45%"></IMAGE>
+	   <IMAGE src="images/st_compare/P2_unc.png" width="45%"></IMAGE></p>
+	<p><IMAGE src="images/st_compare/T1.png" width="45%"></IMAGE>
+	   <IMAGE src="images/st_compare/T2.png" width="45%"></IMAGE></p>
+	<p><IMAGE src="images/st_compare/T1_unc.png" width="45%"></IMAGE>
+	   <IMAGE src="images/st_compare/T2_unc.png" width="45%"></IMAGE></p>
+	<p><IMAGE src="images/st_compare/Cx1.png" width="45%"></IMAGE>
+	   <IMAGE src="images/st_compare/Cx2.png" width="45%"></IMAGE></p>
+	<p><IMAGE src="images/st_compare/Cz1.png" width="45%"></IMAGE>
+	   <IMAGE src="images/st_compare/Cz2.png" width="45%"></IMAGE></p>
+
+
+   
+   <div class="columns features">
+   <div class="one-third first">
+	   <h3>Compare weighted plots</h3>
+      <p><a href="plots.html?p_file_list=images/st_compare/swAllpi0Compare.txt&p_width=33" class="more">&pi;<sup>0</sup> fits</a>
+      <p><a href="plots.html?p_file_list=images/st_compare/swAllK0Compare.txt&p_width=25" class="more">K<sup>0</sup> fits</a>
+      <p><a href="plots.html?p_file_list=images/st_compare/sigMMpip_pimCompare.txt&p_width=25" class="more">Missing Mass(&pi;<sup>+</sup> &pi;<sup>-</sup>) (Signal)</a>
+      <p><a href="plots.html?p_file_list=images/st_compare/sigMMp_pip_pimCompare.txt&p_width=25" class="more">Missing Mass(p &pi;<sup>+</sup> &pi;<sup>-</sup>) (Signal)</a>
+      <p><a href="plots.html?p_file_list=images/st_compare/sigM_pip_pimCompare.txt&p_width=25" class="more">Mass(&pi;<sup>+</sup> &pi;<sup>-</sup>) (Signal)</a>
+      <p><a href="plots.html?p_file_list=images/st_compare/sigMM_pCompare.txt&p_width=25" class="more">Missing Mass(p) (Signal)</a>
+      <p><a href="plots.html?p_file_list=images/st_compare/bgMMpip_pimCompare.txt&p_width=25" class="more">Missing Mass(&pi;<sup>+</sup> &pi;<sup>-</sup>) (Background)</a>
+      <p><a href="plots.html?p_file_list=images/st_compare/bgMMp_pip_pimCompare.txt&p_width=25" class="more">Missing Mass(p &pi;<sup>+</sup> &pi;<sup>-</sup>) (BAckground)</a>
+      <p><a href="plots.html?p_file_list=images/st_compare/bgM_pip_pimCompare.txt&p_width=25" class="more">Mass(&pi;<sup>+</sup> &pi;<sup>-</sup>) (Background)</a>
+      <p><a href="plots.html?p_file_list=images/st_compare/bgMM_pCompare.txt&p_width=25" class="more">Missing Mass(p) (Background)</a>
+   </div>
+    <div class="one-third">
+	   <h3>Compare MCMC integrated distributions</h3>
+      <p><a href="plots.html?p_file_list=images/st_compare/cosXCompare.txt&p_width=25" class="more">cosX</a>
+      <p><a href="plots.html?p_file_list=images/st_compare/cosYCompare.txt&p_width=25" class="more">cosY</a>
+      <p><a href="plots.html?p_file_list=images/st_compare/cosZCompare.txt&p_width=25" class="more">cosZ</a>
+      <p><a href="plots.html?p_file_list=images/st_compare/phiK0Compare.txt&p_width=25" class="more">phiK0</a>
+      <p><a href="plots.html?p_file_list=images/st_compare/polCompare.txt&p_width=25" class="more">pol degree</a>
+	</div>
+    <div class="one-third">
+      <h3>Compare PDFs</h3>
+      <p>Placeholder text Placeholder text Placeholder</p>
+     <p><a href="plots.html?p_file_list=images/st_compare/B_PdfCompare.txt&p_width=25" class="more">Beam asymmetry</a>
+     <p><a href="plots.html?p_file_list=images/st_compare/Ox_PdfCompare.txt&p_width=25" class="more">O<sub>x</sub></a>
+     <p><a href="plots.html?p_file_list=images/st_compare/Oz_PdfCompare.txt&p_width=25" class="more">O<sub>z</sub></a>
+     <p><a href="plots.html?p_file_list=images/st_compare/R_PdfCompare.txt&p_width=25" class="more">Recoil</a>
+     <p><a href="plots.html?p_file_list=images/st_compare/T_PdfCompare.txt&p_width=25" class="more">Target</a>
+     <p><a href="plots.html?p_file_list=images/st_compare/Cx_PdfCompare.txt&p_width=25" class="more">C<sub>x</sub></a>
+     <p><a href="plots.html?p_file_list=images/st_compare/Cz_PdfCompare.txt&p_width=25" class="more">C<sub>z</sub></a>
+     
+	</div>
+   </div>
+   
+    <div class="columns features">
+   <div class="one-third first">
+	   <h3>Correlations</h3>
+      <p><a href="plots.html?p_file_list=images/st_compare/cosXCompareCorr.txt&p_width=25" class="more">cosX vs K0 mass</a>
+   </div>
+    <div class="one-third">
+      <p>Placeholder text Placeholder text Placeholder</p>
+	</div>
+    <div class="one-third">
+      <p>Placeholder text Placeholder text Placeholder</p>
+     
+	</div>
+   </div>
+  
+   
+   <div class="columns features">
+   <div class="text-intro"><h3>All plots by bin / test</h3>
+   </div>
+    <div class="one-third first">
+      <h3>E<sub>&gamma;</sub> 1.1 to 1.35 GeV</h3></h3>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin00.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) -1 to -0.622</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin01.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) -0.622 to -0.39</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin02.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) -0.39 to -0.146</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin03.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) -0.146 to 0.054</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin04.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) 0.054 to 0.298</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin05.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) 0.298 to 1</a></p>
+      
+    </div>
+    <div class="one-third">
+      <h3>E<sub>&gamma;</sub> 1.35 to 1.6 GeV</h3>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin10.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) -1 to -0.465</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin11.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) -0.465 to -0.275</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin12.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) -0.275 to -0.135</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin13.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) -0.135 to 0.005</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin14.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) 0.005 to 0.165</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin15.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) 0.165 to 0.345</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin16.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) 0.345 to 0.535</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin17.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) 0.535 to 1</a></p>
+    </div>  
+    <div class="one-third">
+      <h3>E<sub>&gamma;</sub> 1.6 to 1.85 GeV</h3></h3>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin20.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) -1 to -0.175</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin21.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) -0.175 to 0.035</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin22.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) 0.035 to 0.295</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin23.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) 0.295 to 0.505</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin24.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) 0.505 to 1</a></p>
+	</div>
+  </div>   
+    <div class="one-third first">
+      <h3>E<sub>&gamma;</sub> 1.85 to 2.1 GeV</h3></h3>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin20.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) -1 to 0.155</a></p>
+      <p><a href="plots.html?p_file_list=images/allPerBin_st/bin21.txt&p_width=25" class="more">cos(&theta;<sub>K0</sub>) 0.155 to 1</a></p>
+	</div>
+  </div>   
+  
+  
+  <div class="columns features">
+   <div class="text-intro"><h3>Comparison with Ewald / Nepali</h3>
+   </div>
+   
+	<TABLE class="pure-table">
+	<thead>
+	<TR><TD>Study<TD>E<sub>&gamma;</sub> bins<TD>cos &theta; bins
+	</thead>
+	<tbody>
+	<TR><TD valign="top">This work</TD>
+		<TD>1100-1350 MeV<BR>1350-1600 MeV<BR>1600-1850 MeV<BR>1850-2100 GeV
+		</TD>
+		<TD>Varied such that each bin has 1000 integrated signal</TD></TR>
+	<TR><TD valign="top">Ewald &Sigma;</TD>
+		<TD>1050-1250 MeV<BR>1250-1450 MeV<BR>1450-1650 MeV
+		</TD>
+		<TD>5 bins</TD></TR>
+	<TR><TD valign="top">Ewald Recoil</TD>
+		<TD>1050-1350 MeV<BR>1350-1650 MeV<BR>1650-1950 MeV<BR>1950-2250 MeV
+		</TD>
+		<TD>6 bins</TD></TR>
+	</tbody>
+	</TABLE>
+   
+   <BR><BR>
+    <div class="one-third first">
+      <h3>&Sigma; comparison</h3>
+      <p><a href="http://nuclear.gla.ac.uk/~louise/g8_k0_SigmaPlus/g8K0SigCompareEwald.html" class="more">View</a></p>
+    </div>
+    <div class="one-third">
+      <h3>Recoil comparison</h3>
+      <p><a href="plots.html?p_file_list=recoilComp.txt&p_width=70" class="more">View</a></p>
+    </div>
+    <div class="one-third">
+      <h3>Useful links</h3>
+      <p><a href="https://linkinghub.elsevier.com/retrieve/pii/S0370269314006972" class="more">Ewald paper</a></p>
+      <p><a href="http://hss.ulb.uni-bonn.de/2010/2044/2044.pdf" class="more">Ewald thesis (see page 171)</a></p>
+      <p><a href="https://journals.aps.org/prc/abstract/10.1103/PhysRevC.87.045206" class="more">g11 paper Nepali 2013</a></p>
+    </div>
+  </div>    
+  
+   <BR><BR>
+    <div class="one-third first">
+      <h3>Results summary</h3>
+      <p><a href="plots.html?p_file_list=CxCz.txt&p_width=70" class="more">Cx / Cz</a></p>
+      <p><a href="plots.html?p_file_list=sigmaComp.txt&p_width=70" class="more">Beam Asymmetry - comparison of methods</a></p>
+    </div>
+  </div>      
+  
+    <div class="columns features">
+   <div class="text-intro"><h3>Comparison with toy data</h3>
+   <ul style="padding-left: 20px;">
+	   <li>Toy events are created starting from phase space simulation data</li>
+	   <li>Observable values are set equal to those extracted for the real data</li>
+	   <li>Simulated events are then accepted/rejected based on the corresponding distribution</li>
+	   <li>5 sets of toy data are generated, with number of events in each set approximately equal to the integrated signal for that bin</li>
+   </ul>
+   </div>
+      
+   <BR><BR>
+    <div class="one-third first">
+      <h3>Toy vs real data</h3>
+      <p><a href="plots.html?p_file_list=toy.txt&p_width=100" class="more">All observables</a></p>
+    </div>
+    <div class="one-third">
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+	</div>
+    <div class="one-third">
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+	</div>
+  </div> 
+  
+  
+  
+</section>
+<footer>
+  <div class="copyright"><small></a></small></div>
+</footer>
+</body>
+</html>

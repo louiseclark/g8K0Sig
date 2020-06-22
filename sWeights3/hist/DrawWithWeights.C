@@ -3,6 +3,13 @@
 // Run with
 // root --hsdata DrawWithWeights.C
 
+  // Baseline
+  //TString weightsDir = "/home/louise/g8K0Sig/code/sWeights3/";
+  //TString outdir = "/home/louise/public_html/html/images/weighted/";
+  // Systematic tests
+  TString weightsDir = "/home/louise/g8K0Sig/code/sWeights3_test10/";
+  TString outdir = "/home/louise/public_html/html/images/st10/weighted/";
+  
   // Define bins
   Double_t eBinLimits[] = {1.1, 1.35, 1.6, 1.85, 2.1};
   int iBinNums[] = {6,8,5,2};
@@ -17,6 +24,8 @@
   TH1F* bgHistMM_pip_pim[4][8];
   TH1F* sigHistMM_pip_pimAll;
   TH1F* bgHistMM_pip_pimAll;
+  
+  TF1* massFunc[4][8];
   
   TH1F* sigHistMM_p_pip_pim[4][8];
   TH1F* bgHistMM_p_pip_pim[4][8];
@@ -55,6 +64,80 @@
   TH1* sigHistPhiK0Asym[4][8];  
   TH1* bgHistPhiK0Asym[4][8];
   
+  // correlation
+  TH2F* allHistK0CosX[4][8];
+  TH2F* sigHistK0CosX[4][8];
+  TH2F* bgHistK0CosX[4][8];
+  TH2F* allHistK0CosXAll;
+  TH2F* sigHistK0CosXAll;
+  TH2F* bgHistK0CosXAll;
+  
+  TH2F* allHistpi0CosX[4][8];
+  TH2F* sigHistpi0CosX[4][8];
+  TH2F* bgHistpi0CosX[4][8];
+  TH2F* allHistpi0CosXAll;
+  TH2F* sigHistpi0CosXAll;
+  TH2F* bgHistpi0CosXAll;  
+  
+  TH2F* allHistK0CosY[4][8];
+  TH2F* sigHistK0CosY[4][8];
+  TH2F* bgHistK0CosY[4][8];
+  TH2F* allHistK0CosYAll;
+  TH2F* sigHistK0CosYAll;
+  TH2F* bgHistK0CosYAll;
+  
+  TH2F* allHistpi0CosY[4][8];
+  TH2F* sigHistpi0CosY[4][8];
+  TH2F* bgHistpi0CosY[4][8];
+  TH2F* allHistpi0CosYAll;
+  TH2F* sigHistpi0CosYAll;
+  TH2F* bgHistpi0CosYAll;   
+  
+  TH2F* allHistK0CosZ[4][8];
+  TH2F* sigHistK0CosZ[4][8];
+  TH2F* bgHistK0CosZ[4][8];
+  TH2F* allHistK0CosZAll;
+  TH2F* sigHistK0CosZAll;
+  TH2F* bgHistK0CosZAll;
+  
+  TH2F* allHistpi0CosZ[4][8];
+  TH2F* sigHistpi0CosZ[4][8];
+  TH2F* bgHistpi0CosZ[4][8];
+  TH2F* allHistpi0CosZAll;
+  TH2F* sigHistpi0CosZAll;
+  TH2F* bgHistpi0CosZAll;  
+  
+  TH2F* allHistK0phiK0[4][8];
+  TH2F* sigHistK0phiK0[4][8];
+  TH2F* bgHistK0phiK0[4][8];
+  TH2F* allHistK0phiK0All;
+  TH2F* sigHistK0phiK0All;
+  TH2F* bgHistK0phiK0All;
+  
+  TH2F* allHistpi0phiK0[4][8];
+  TH2F* sigHistpi0phiK0[4][8];
+  TH2F* bgHistpi0phiK0[4][8];
+  TH2F* allHistpi0phiK0All;
+  TH2F* sigHistpi0phiK0All;
+  TH2F* bgHistpi0phiK0All;
+  
+  TH2F* allHistK0pol[4][8];
+  TH2F* sigHistK0pol[4][8];
+  TH2F* bgHistK0pol[4][8];
+  TH2F* allHistK0polAll;
+  TH2F* sigHistK0polAll;
+  TH2F* bgHistK0polAll;
+  
+  TH2F* allHistpi0pol[4][8];
+  TH2F* sigHistpi0pol[4][8];
+  TH2F* bgHistpi0pol[4][8];
+  TH2F* allHistpi0polAll;
+  TH2F* sigHistpi0polAll;
+  TH2F* bgHistpi0polAll;   
+     
+   
+  
+  
   int currentEBin = 0;
   Double_t currentEBinCentre = 0.0;
   int currentThBin = 0;
@@ -85,22 +168,22 @@ void getHistForBin(float eValue, float thValue) {
 void DrawWithWeights() {
 	
   getHistForBin(1.48,0.6);
-  cout << "Louise test currentEBin = " << currentEBin << " currentEBinCentre = " << currentEBinCentre << endl;
-  cout << "Louise test currentThBin = " << currentThBin << " currentThBinCentre = " << currentThBinCentre << endl;
+  //cout << "Louise test currentEBin = " << currentEBin << " currentEBinCentre = " << currentEBinCentre << endl;
+  //cout << "Louise test currentThBin = " << currentThBin << " currentThBinCentre = " << currentThBinCentre << endl;
   
   Weights* wts[]={new Weights("TotalWeights"),new Weights("TotalWeights"),new Weights("TotalWeights"),new Weights("TotalWeights")};
-  wts[0]->Merge("/home/louise/g8K0Sig/code/sWeights3/out_all_pi0K0_binned/Egamma1.23/Tweights.root","histWeights0.root","HSsWeights");
-  wts[1]->Merge("/home/louise/g8K0Sig/code/sWeights3/out_all_pi0K0_binned/Egamma1.48/Tweights.root","histWeights1.root","HSsWeights");
-  wts[2]->Merge("/home/louise/g8K0Sig/code/sWeights3/out_all_pi0K0_binned/Egamma1.73/Tweights.root","histWeights2.root","HSsWeights");
-  wts[3]->Merge("/home/louise/g8K0Sig/code/sWeights3/out_all_pi0K0_binned/Egamma1.98/Tweights.root","histWeights3.root","HSsWeights");
+  wts[0]->Merge(weightsDir+"out_all_pi0K0_binned/Egamma1.23/Tweights.root","histWeights0.root","HSsWeights");
+  wts[1]->Merge(weightsDir+"out_all_pi0K0_binned/Egamma1.48/Tweights.root","histWeights1.root","HSsWeights");
+  wts[2]->Merge(weightsDir+"out_all_pi0K0_binned/Egamma1.73/Tweights.root","histWeights2.root","HSsWeights");
+  wts[3]->Merge(weightsDir+"out_all_pi0K0_binned/Egamma1.98/Tweights.root","histWeights3.root","HSsWeights");
+  //wts[3]->Merge("/home/louise/g8K0Sig/code/sWeights3/out_all_pi0K0_binned/Egamma1.98/Tweights.root","histWeights3.root","HSsWeights");
 
-  TString outdir = "/home/louise/g8K0Sig/AnalysisSummary/html/images/weighted/";
   TCanvas* c1=new TCanvas("c1","c1",800,600); // default canvas
   c1->cd(0); // set default canvas
  
   TChain chain("HSParticles");
   chain.AddFile("/w/work0/home/louise/g8K0Sig/convert_output/filepPi0_all.root");
-  Double_t fgID,costhK0CMS, Egamma, MM_pip_pim, MM_p_pip_pim, M_pip_pim, MM_p, cosX, cosY, cosZ, phiK0;
+  Double_t fgID,costhK0CMS, Egamma, MM_pip_pim, MM_p_pip_pim, M_pip_pim, MM_p, cosX, cosY, cosZ, phiK0, pol;
   Int_t polState;
   chain.SetBranchAddress("fgID",&fgID);
   chain.SetBranchAddress("costhK0CMS",&costhK0CMS);
@@ -113,6 +196,7 @@ void DrawWithWeights() {
   chain.SetBranchAddress("cosY",&cosY);
   chain.SetBranchAddress("cosZ",&cosZ);
   chain.SetBranchAddress("phiK0",&phiK0);
+  chain.SetBranchAddress("pol",&pol);
   chain.SetBranchAddress("polState",&polState);
     
   // Create histograms
@@ -194,6 +278,108 @@ void DrawWithWeights() {
 		bgHistPhiK0Perp[i][j]->GetXaxis()->SetTitle("#phi_{K0}");				
 		bgHistPhiK0Perp[i][j]->SetLineWidth(2);				
 
+		// correlation
+		allHistK0CosX[i][j] = new TH2F("All events",histTitle.str().c_str(), 75, 0.44, 0.56, 75, -1.0, 1.0);
+		sigHistK0CosX[i][j] = new TH2F("Integrated Signal Weight",histTitle.str().c_str(), 75, 0.44, 0.56, 75, -1.0, 1.0);
+		bgHistK0CosX[i][j] = new TH2F("Integrated Background Weight",histTitle.str().c_str(), 75, 0.44, 0.56, 75, -1.0, 1.0);
+		allHistK0CosX[i][j]->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	    allHistK0CosX[i][j]->GetYaxis()->SetTitle("cos #theta_{x}");
+		sigHistK0CosX[i][j]->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+		sigHistK0CosX[i][j]->GetYaxis()->SetTitle("cos #theta_{x}");
+		bgHistK0CosX[i][j]->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+		bgHistK0CosX[i][j]->GetYaxis()->SetTitle("cos #theta_{x}");
+
+		allHistK0CosY[i][j] = new TH2F("All events",histTitle.str().c_str(), 75, 0.44, 0.56, 75, -1.0, 1.0);
+		sigHistK0CosY[i][j] = new TH2F("Integrated Signal Weight",histTitle.str().c_str(), 75, 0.44, 0.56, 75, -1.0, 1.0);
+		bgHistK0CosY[i][j] = new TH2F("Integrated Background Weight",histTitle.str().c_str(), 75, 0.44, 0.56, 75, -1.0, 1.0);
+		allHistK0CosY[i][j]->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	    allHistK0CosY[i][j]->GetYaxis()->SetTitle("cos #theta_{y}");
+		sigHistK0CosY[i][j]->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+		sigHistK0CosY[i][j]->GetYaxis()->SetTitle("cos #theta_{y}");
+		bgHistK0CosY[i][j]->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+		bgHistK0CosY[i][j]->GetYaxis()->SetTitle("cos #theta_{y}");
+
+		allHistK0CosZ[i][j] = new TH2F("All events",histTitle.str().c_str(), 75, 0.44, 0.56, 75, -1.0, 1.0);
+		sigHistK0CosZ[i][j] = new TH2F("Integrated Signal Weight",histTitle.str().c_str(), 75, 0.44, 0.56, 75, -1.0, 1.0);
+		bgHistK0CosZ[i][j] = new TH2F("Integrated Background Weight",histTitle.str().c_str(), 75, 0.44, 0.56, 75, -1.0, 1.0);
+		allHistK0CosZ[i][j]->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	    allHistK0CosZ[i][j]->GetYaxis()->SetTitle("cos #theta_{z}");
+		sigHistK0CosZ[i][j]->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+		sigHistK0CosZ[i][j]->GetYaxis()->SetTitle("cos #theta_{z}");
+		bgHistK0CosZ[i][j]->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+		bgHistK0CosZ[i][j]->GetYaxis()->SetTitle("cos #theta_{z}");
+		
+		allHistK0phiK0[i][j] = new TH2F("All events",histTitle.str().c_str(), 75, 0.44, 0.56, 75, -3.14, 3.14);
+		sigHistK0phiK0[i][j] = new TH2F("Integrated Signal Weight",histTitle.str().c_str(), 75, 0.44, 0.56, 75, -3.14, 3.14);
+		bgHistK0phiK0[i][j] = new TH2F("Integrated Background Weight",histTitle.str().c_str(), 75, 0.44, 0.56, 75, -3.14, 3.14);
+		allHistK0phiK0[i][j]->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	    allHistK0phiK0[i][j]->GetYaxis()->SetTitle("#phi_{K0}");
+		sigHistK0phiK0[i][j]->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+		sigHistK0phiK0[i][j]->GetYaxis()->SetTitle("#phi_{K0}");
+		bgHistK0phiK0[i][j]->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+		bgHistK0phiK0[i][j]->GetYaxis()->SetTitle("#phi_{K0}");
+
+		allHistK0pol[i][j] = new TH2F("All events",histTitle.str().c_str(), 75, 0.44, 0.56, 75, 0.6, 1.0);
+		sigHistK0pol[i][j] = new TH2F("Integrated Signal Weight",histTitle.str().c_str(), 75, 0.44, 0.56, 75, 0.6, 1.0);
+		bgHistK0pol[i][j] = new TH2F("Integrated Background Weight",histTitle.str().c_str(), 75, 0.44, 0.56, 75, 0.6, 1.0);
+		allHistK0pol[i][j]->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	    allHistK0pol[i][j]->GetYaxis()->SetTitle("Polarisation degree");
+		sigHistK0pol[i][j]->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+		sigHistK0pol[i][j]->GetYaxis()->SetTitle("Polarisation degree");
+		bgHistK0pol[i][j]->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+		bgHistK0pol[i][j]->GetYaxis()->SetTitle("Polarisation degree");
+
+		allHistpi0CosX[i][j] = new TH2F("All events",histTitle.str().c_str(), 75, 0.05, 0.22, 75, -1.0, 1.0);
+		sigHistpi0CosX[i][j] = new TH2F("Integrated Signal Weight",histTitle.str().c_str(), 75, 0.05, 0.22, 75, -1.0, 1.0);
+		bgHistpi0CosX[i][j] = new TH2F("Integrated Background Weight",histTitle.str().c_str(), 75, 0.05, 0.22, 75, -1.0, 1.0);
+		allHistpi0CosX[i][j]->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	    allHistpi0CosX[i][j]->GetYaxis()->SetTitle("cos #theta_{x}");
+		sigHistpi0CosX[i][j]->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+		sigHistpi0CosX[i][j]->GetYaxis()->SetTitle("cos #theta_{x}");
+		bgHistpi0CosX[i][j]->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+		bgHistpi0CosX[i][j]->GetYaxis()->SetTitle("cos #theta_{x}");
+
+		allHistpi0CosY[i][j] = new TH2F("All events",histTitle.str().c_str(), 75, 0.05, 0.22, 75, -1.0, 1.0);
+		sigHistpi0CosY[i][j] = new TH2F("Integrated Signal Weight",histTitle.str().c_str(), 75, 0.05, 0.22, 75, -1.0, 1.0);
+		bgHistpi0CosY[i][j] = new TH2F("Integrated Background Weight",histTitle.str().c_str(), 75, 0.05, 0.22, 75, -1.0, 1.0);
+		allHistpi0CosY[i][j]->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	    allHistpi0CosY[i][j]->GetYaxis()->SetTitle("cos #theta_{y}");
+		sigHistpi0CosY[i][j]->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+		sigHistpi0CosY[i][j]->GetYaxis()->SetTitle("cos #theta_{y}");
+		bgHistpi0CosY[i][j]->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+		bgHistpi0CosY[i][j]->GetYaxis()->SetTitle("cos #theta_{y}");
+
+		allHistpi0CosZ[i][j] = new TH2F("All events",histTitle.str().c_str(), 75, 0.05, 0.22, 75, -1.0, 1.0);
+		sigHistpi0CosZ[i][j] = new TH2F("Integrated Signal Weight",histTitle.str().c_str(), 75, 0.05, 0.22, 75, -1.0, 1.0);
+		bgHistpi0CosZ[i][j] = new TH2F("Integrated Background Weight",histTitle.str().c_str(), 75, 0.05, 0.22, 75, -1.0, 1.0);
+		allHistpi0CosZ[i][j]->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	    allHistpi0CosZ[i][j]->GetYaxis()->SetTitle("cos #theta_{z}");
+		sigHistpi0CosZ[i][j]->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+		sigHistpi0CosZ[i][j]->GetYaxis()->SetTitle("cos #theta_{z}");
+		bgHistpi0CosZ[i][j]->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+		bgHistpi0CosZ[i][j]->GetYaxis()->SetTitle("cos #theta_{z}");
+		
+		allHistpi0phiK0[i][j] = new TH2F("All events",histTitle.str().c_str(), 75, 0.05, 0.22, 75, -3.14, 3.14);
+		sigHistpi0phiK0[i][j] = new TH2F("Integrated Signal Weight",histTitle.str().c_str(), 75, 0.05, 0.22, 75, -3.14, 3.14);
+		bgHistpi0phiK0[i][j] = new TH2F("Integrated Background Weight",histTitle.str().c_str(), 75, 0.05, 0.22, 75, -3.14, 3.14);
+		allHistpi0phiK0[i][j]->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	    allHistpi0phiK0[i][j]->GetYaxis()->SetTitle("#phi_{K0}");
+		sigHistpi0phiK0[i][j]->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+		sigHistpi0phiK0[i][j]->GetYaxis()->SetTitle("#phi_{K0}");
+		bgHistpi0phiK0[i][j]->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+		bgHistpi0phiK0[i][j]->GetYaxis()->SetTitle("#phi_{K0}");
+
+		allHistpi0pol[i][j] = new TH2F("All events",histTitle.str().c_str(), 75, 0.05, 0.22, 75, 0.6, 1.0);
+		sigHistpi0pol[i][j] = new TH2F("Integrated Signal Weight",histTitle.str().c_str(), 75, 0.05, 0.22, 75, 0.6, 1.0);
+		bgHistpi0pol[i][j] = new TH2F("Integrated Background Weight",histTitle.str().c_str(), 75, 0.05, 0.22, 75, 0.6, 1.0);
+		allHistpi0pol[i][j]->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	    allHistpi0pol[i][j]->GetYaxis()->SetTitle("Polarisation degree");
+		sigHistpi0pol[i][j]->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+		sigHistpi0pol[i][j]->GetYaxis()->SetTitle("Polarisation degree");
+		bgHistpi0pol[i][j]->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+		bgHistpi0pol[i][j]->GetYaxis()->SetTitle("Polarisation degree");		
+
+
 	}
   }
   // unbinned
@@ -253,6 +439,108 @@ void DrawWithWeights() {
 	bgHistCosZAll = new TH1F("Integrated BG Weight","All events", 75, -1.0, 1.0);
 	bgHistCosZAll->GetXaxis()->SetTitle("cos #theta_{z}");		
 	bgHistCosZAll->SetLineWidth(2);	
+  
+  // correlation
+	allHistK0CosXAll = new TH2F("All events","All events", 75, 0.44, 0.56, 75, -1.0, 1.0);
+	sigHistK0CosXAll = new TH2F("Integrated Signal Weight","All events", 75, 0.44, 0.56, 75, -1.0, 1.0);
+	bgHistK0CosXAll = new TH2F("Integrated Background Weight","All events", 75, 0.44, 0.56, 75, -1.0, 1.0);
+	allHistK0CosXAll->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	allHistK0CosXAll->GetYaxis()->SetTitle("cos #theta_{x}");
+	sigHistK0CosXAll->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	sigHistK0CosXAll->GetYaxis()->SetTitle("cos #theta_{x}");
+	bgHistK0CosXAll->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	bgHistK0CosXAll->GetYaxis()->SetTitle("cos #theta_{x}");
+
+	allHistK0CosYAll = new TH2F("All events","All events", 75, 0.44, 0.56, 75, -1.0, 1.0);
+	sigHistK0CosYAll = new TH2F("Integrated Signal Weight","All events", 75, 0.44, 0.56, 75, -1.0, 1.0);
+	bgHistK0CosYAll = new TH2F("Integrated Background Weight","All events", 75, 0.44, 0.56, 75, -1.0, 1.0);
+	allHistK0CosYAll->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	allHistK0CosYAll->GetYaxis()->SetTitle("cos #theta_{y}");
+	sigHistK0CosYAll->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	sigHistK0CosYAll->GetYaxis()->SetTitle("cos #theta_{y}");
+	bgHistK0CosYAll->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	bgHistK0CosYAll->GetYaxis()->SetTitle("cos #theta_{y}");
+
+	allHistK0CosZAll = new TH2F("All events","All events", 75, 0.44, 0.56, 75, -1.0, 1.0);
+	sigHistK0CosZAll = new TH2F("Integrated Signal Weight","All events", 75, 0.44, 0.56, 75, -1.0, 1.0);
+	bgHistK0CosZAll = new TH2F("Integrated Background Weight","All events", 75, 0.44, 0.56, 75, -1.0, 1.0);
+	allHistK0CosZAll->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	allHistK0CosZAll->GetYaxis()->SetTitle("cos #theta_{z}");
+	sigHistK0CosZAll->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	sigHistK0CosZAll->GetYaxis()->SetTitle("cos #theta_{z}");
+	bgHistK0CosZAll->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	bgHistK0CosZAll->GetYaxis()->SetTitle("cos #theta_{z}");
+	
+	allHistK0phiK0All = new TH2F("All events","All events", 75, 0.44, 0.56, 75, -3.14, 3.14);
+	sigHistK0phiK0All = new TH2F("Integrated Signal Weight","All events", 75, 0.44, 0.56, 75, -3.14, 3.14);
+	bgHistK0phiK0All = new TH2F("Integrated Background Weight","All events", 75, 0.44, 0.56, 75, -3.14, 3.14);
+	allHistK0phiK0All->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	allHistK0phiK0All->GetYaxis()->SetTitle("#phi_{K0}");
+	sigHistK0phiK0All->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	sigHistK0phiK0All->GetYaxis()->SetTitle("#phi_{K0}");
+	bgHistK0phiK0All->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	bgHistK0phiK0All->GetYaxis()->SetTitle("#phi_{K0}");
+
+	allHistK0polAll = new TH2F("All events","All events", 75, 0.44, 0.56, 75, 0.6, 1.0);
+	sigHistK0polAll = new TH2F("Integrated Signal Weight","All events", 75, 0.44, 0.56, 75, 0.6, 1.0);
+	bgHistK0polAll = new TH2F("Integrated Background Weight","All events", 75, 0.44, 0.56, 75, 0.6, 1.0);
+	allHistK0polAll->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	allHistK0polAll->GetYaxis()->SetTitle("Polarisation degree");
+	sigHistK0polAll->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	sigHistK0polAll->GetYaxis()->SetTitle("Polarisation degree");
+	bgHistK0polAll->GetXaxis()->SetTitle("Mass(#pi^{+} #pi^{-}) GeV");
+	bgHistK0polAll->GetYaxis()->SetTitle("Polarisation degree");
+
+	allHistpi0CosXAll = new TH2F("All events","All events", 75, 0.05, 0.22, 75, -1.0, 1.0);
+	sigHistpi0CosXAll = new TH2F("Integrated Signal Weight","All events", 75, 0.05, 0.22, 75, -1.0, 1.0);
+	bgHistpi0CosXAll = new TH2F("Integrated Background Weight","All events", 75, 0.05, 0.22, 75, -1.0, 1.0);
+	allHistpi0CosXAll->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	allHistpi0CosXAll->GetYaxis()->SetTitle("cos #theta_{x}");
+	sigHistpi0CosXAll->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	sigHistpi0CosXAll->GetYaxis()->SetTitle("cos #theta_{x}");
+	bgHistpi0CosXAll->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	bgHistpi0CosXAll->GetYaxis()->SetTitle("cos #theta_{x}");
+
+	allHistpi0CosYAll = new TH2F("All events","All events", 75, 0.05, 0.22, 75, -1.0, 1.0);
+	sigHistpi0CosYAll = new TH2F("Integrated Signal Weight","All events", 75, 0.05, 0.22, 75, -1.0, 1.0);
+	bgHistpi0CosYAll = new TH2F("Integrated Background Weight","All events", 75, 0.05, 0.22, 75, -1.0, 1.0);
+	allHistpi0CosYAll->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	allHistpi0CosYAll->GetYaxis()->SetTitle("cos #theta_{y}");
+	sigHistpi0CosYAll->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	sigHistpi0CosYAll->GetYaxis()->SetTitle("cos #theta_{y}");
+	bgHistpi0CosYAll->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	bgHistpi0CosYAll->GetYaxis()->SetTitle("cos #theta_{y}");
+
+	allHistpi0CosZAll = new TH2F("All events","All events", 75, 0.05, 0.22, 75, -1.0, 1.0);
+	sigHistpi0CosZAll = new TH2F("Integrated Signal Weight","All events", 75, 0.05, 0.22, 75, -1.0, 1.0);
+	bgHistpi0CosZAll = new TH2F("Integrated Background Weight","All events", 75, 0.05, 0.22, 75, -1.0, 1.0);
+	allHistpi0CosZAll->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	allHistpi0CosZAll->GetYaxis()->SetTitle("cos #theta_{z}");
+	sigHistpi0CosZAll->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	sigHistpi0CosZAll->GetYaxis()->SetTitle("cos #theta_{z}");
+	bgHistpi0CosZAll->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	bgHistpi0CosZAll->GetYaxis()->SetTitle("cos #theta_{z}");
+	
+	allHistpi0phiK0All = new TH2F("All events","All events", 75, 0.05, 0.22, 75, -3.14, 3.14);
+	sigHistpi0phiK0All = new TH2F("Integrated Signal Weight","All events", 75, 0.05, 0.22, 75, -3.14, 3.14);
+	bgHistpi0phiK0All = new TH2F("Integrated Background Weight","All events", 75, 0.05, 0.22, 75, -3.14, 3.14);
+	allHistpi0phiK0All->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	allHistpi0phiK0All->GetYaxis()->SetTitle("#phi_{K0}");
+	sigHistpi0phiK0All->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	sigHistpi0phiK0All->GetYaxis()->SetTitle("#phi_{K0}");
+	bgHistpi0phiK0All->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	bgHistpi0phiK0All->GetYaxis()->SetTitle("#phi_{K0}");
+
+	allHistpi0polAll = new TH2F("All events","All events", 75, 0.05, 0.22, 75, 0.6, 1.0);
+	sigHistpi0polAll = new TH2F("Integrated Signal Weight","All events", 75, 0.05, 0.22, 75, 0.6, 1.0);
+	bgHistpi0polAll = new TH2F("Integrated Background Weight","All events", 75, 0.05, 0.22, 75, 0.6, 1.0);
+	allHistpi0polAll->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	allHistpi0polAll->GetYaxis()->SetTitle("Polarisation degree");
+	sigHistpi0polAll->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	sigHistpi0polAll->GetYaxis()->SetTitle("Polarisation degree");
+	bgHistpi0polAll->GetXaxis()->SetTitle("Missing Mass (p #pi^{+} #pi^{-}) GeV");
+	bgHistpi0polAll->GetYaxis()->SetTitle("Polarisation degree");		
+  
   
   // Fill the histograms  
   for(Int_t i=0;i<chain.GetEntries();i++){
@@ -332,6 +620,77 @@ void DrawWithWeights() {
       // cosZ
       sigHistCosZAll->Fill(cosZ,wts[currentEBin]->GetWeight("Signal"));
       bgHistCosZAll->Fill(cosZ,wts[currentEBin]->GetWeight("BG"));
+      
+      // correlation
+	  sigHistK0CosX[currentEBin][currentThBin]->Fill(M_pip_pim,cosX,wts[currentEBin]->GetWeight("Signal"));
+      bgHistK0CosX[currentEBin][currentThBin]->Fill(M_pip_pim,cosX,wts[currentEBin]->GetWeight("BG"));
+      allHistK0CosX[currentEBin][currentThBin]->Fill(M_pip_pim,cosX,wts[currentEBin]->GetWeight("All"));
+	  sigHistK0CosXAll->Fill(M_pip_pim,cosX,wts[currentEBin]->GetWeight("Signal"));
+      bgHistK0CosXAll->Fill(M_pip_pim,cosX,wts[currentEBin]->GetWeight("BG"));
+      allHistK0CosXAll->Fill(M_pip_pim,cosX,wts[currentEBin]->GetWeight("All"));
+
+	  sigHistK0CosY[currentEBin][currentThBin]->Fill(M_pip_pim,cosY,wts[currentEBin]->GetWeight("Signal"));
+      bgHistK0CosY[currentEBin][currentThBin]->Fill(M_pip_pim,cosY,wts[currentEBin]->GetWeight("BG"));
+      allHistK0CosY[currentEBin][currentThBin]->Fill(M_pip_pim,cosY,wts[currentEBin]->GetWeight("All"));
+	  sigHistK0CosYAll->Fill(M_pip_pim,cosY,wts[currentEBin]->GetWeight("Signal"));
+      bgHistK0CosYAll->Fill(M_pip_pim,cosY,wts[currentEBin]->GetWeight("BG"));
+      allHistK0CosYAll->Fill(M_pip_pim,cosY,wts[currentEBin]->GetWeight("All"));
+      
+	  sigHistK0CosZ[currentEBin][currentThBin]->Fill(M_pip_pim,cosZ,wts[currentEBin]->GetWeight("Signal"));
+      bgHistK0CosZ[currentEBin][currentThBin]->Fill(M_pip_pim,cosZ,wts[currentEBin]->GetWeight("BG"));
+      allHistK0CosZ[currentEBin][currentThBin]->Fill(M_pip_pim,cosZ,wts[currentEBin]->GetWeight("All"));
+	  sigHistK0CosZAll->Fill(M_pip_pim,cosZ,wts[currentEBin]->GetWeight("Signal"));
+      bgHistK0CosZAll->Fill(M_pip_pim,cosZ,wts[currentEBin]->GetWeight("BG"));
+      allHistK0CosZAll->Fill(M_pip_pim,cosZ,wts[currentEBin]->GetWeight("All"));
+      
+	  sigHistK0phiK0[currentEBin][currentThBin]->Fill(M_pip_pim,phiK0,wts[currentEBin]->GetWeight("Signal"));
+      bgHistK0phiK0[currentEBin][currentThBin]->Fill(M_pip_pim,phiK0,wts[currentEBin]->GetWeight("BG"));
+      allHistK0phiK0[currentEBin][currentThBin]->Fill(M_pip_pim,phiK0,wts[currentEBin]->GetWeight("All"));
+	  sigHistK0phiK0All->Fill(M_pip_pim,phiK0,wts[currentEBin]->GetWeight("Signal"));
+      bgHistK0phiK0All->Fill(M_pip_pim,phiK0,wts[currentEBin]->GetWeight("BG"));
+      allHistK0phiK0All->Fill(M_pip_pim,phiK0,wts[currentEBin]->GetWeight("All"));
+      
+	  sigHistK0pol[currentEBin][currentThBin]->Fill(M_pip_pim,pol,wts[currentEBin]->GetWeight("Signal"));
+      bgHistK0pol[currentEBin][currentThBin]->Fill(M_pip_pim,pol,wts[currentEBin]->GetWeight("BG"));
+      allHistK0pol[currentEBin][currentThBin]->Fill(M_pip_pim,pol,wts[currentEBin]->GetWeight("All"));
+	  sigHistK0polAll->Fill(M_pip_pim,pol,wts[currentEBin]->GetWeight("Signal"));
+      bgHistK0polAll->Fill(M_pip_pim,pol,wts[currentEBin]->GetWeight("BG"));
+      allHistK0polAll->Fill(M_pip_pim,pol,wts[currentEBin]->GetWeight("All"));
+      
+	  sigHistpi0CosX[currentEBin][currentThBin]->Fill(MM_p_pip_pim,cosX,wts[currentEBin]->GetWeight("Signal"));
+      bgHistpi0CosX[currentEBin][currentThBin]->Fill(MM_p_pip_pim,cosX,wts[currentEBin]->GetWeight("BG"));
+      allHistpi0CosX[currentEBin][currentThBin]->Fill(MM_p_pip_pim,cosX,wts[currentEBin]->GetWeight("All"));
+	  sigHistpi0CosXAll->Fill(MM_p_pip_pim,cosX,wts[currentEBin]->GetWeight("Signal"));
+      bgHistpi0CosXAll->Fill(MM_p_pip_pim,cosX,wts[currentEBin]->GetWeight("BG"));
+      allHistpi0CosXAll->Fill(MM_p_pip_pim,cosX,wts[currentEBin]->GetWeight("All"));
+
+	  sigHistpi0CosY[currentEBin][currentThBin]->Fill(MM_p_pip_pim,cosY,wts[currentEBin]->GetWeight("Signal"));
+      bgHistpi0CosY[currentEBin][currentThBin]->Fill(MM_p_pip_pim,cosY,wts[currentEBin]->GetWeight("BG"));
+      allHistpi0CosY[currentEBin][currentThBin]->Fill(MM_p_pip_pim,cosY,wts[currentEBin]->GetWeight("All"));
+	  sigHistpi0CosYAll->Fill(MM_p_pip_pim,cosY,wts[currentEBin]->GetWeight("Signal"));
+      bgHistpi0CosYAll->Fill(MM_p_pip_pim,cosY,wts[currentEBin]->GetWeight("BG"));
+      allHistpi0CosYAll->Fill(MM_p_pip_pim,cosY,wts[currentEBin]->GetWeight("All"));
+      
+	  sigHistpi0CosZ[currentEBin][currentThBin]->Fill(MM_p_pip_pim,cosZ,wts[currentEBin]->GetWeight("Signal"));
+      bgHistpi0CosZ[currentEBin][currentThBin]->Fill(MM_p_pip_pim,cosZ,wts[currentEBin]->GetWeight("BG"));
+      allHistpi0CosZ[currentEBin][currentThBin]->Fill(MM_p_pip_pim,cosZ,wts[currentEBin]->GetWeight("All"));
+	  sigHistpi0CosZAll->Fill(MM_p_pip_pim,cosZ,wts[currentEBin]->GetWeight("Signal"));
+      bgHistpi0CosZAll->Fill(MM_p_pip_pim,cosZ,wts[currentEBin]->GetWeight("BG"));
+      allHistpi0CosZAll->Fill(MM_p_pip_pim,cosZ,wts[currentEBin]->GetWeight("All"));
+      
+	  sigHistpi0phiK0[currentEBin][currentThBin]->Fill(MM_p_pip_pim,phiK0,wts[currentEBin]->GetWeight("Signal"));
+      bgHistpi0phiK0[currentEBin][currentThBin]->Fill(MM_p_pip_pim,phiK0,wts[currentEBin]->GetWeight("BG"));
+      allHistpi0phiK0[currentEBin][currentThBin]->Fill(MM_p_pip_pim,phiK0,wts[currentEBin]->GetWeight("All"));
+	  sigHistpi0phiK0All->Fill(MM_p_pip_pim,phiK0,wts[currentEBin]->GetWeight("Signal"));
+      bgHistpi0phiK0All->Fill(MM_p_pip_pim,phiK0,wts[currentEBin]->GetWeight("BG"));
+      allHistpi0phiK0All->Fill(MM_p_pip_pim,phiK0,wts[currentEBin]->GetWeight("All"));
+      
+	  sigHistpi0pol[currentEBin][currentThBin]->Fill(MM_p_pip_pim,pol,wts[currentEBin]->GetWeight("Signal"));
+      bgHistpi0pol[currentEBin][currentThBin]->Fill(MM_p_pip_pim,pol,wts[currentEBin]->GetWeight("BG"));
+      allHistpi0pol[currentEBin][currentThBin]->Fill(MM_p_pip_pim,pol,wts[currentEBin]->GetWeight("All"));
+	  sigHistpi0polAll->Fill(MM_p_pip_pim,pol,wts[currentEBin]->GetWeight("Signal"));
+      bgHistpi0polAll->Fill(MM_p_pip_pim,pol,wts[currentEBin]->GetWeight("BG"));
+      allHistpi0polAll->Fill(MM_p_pip_pim,pol,wts[currentEBin]->GetWeight("All"));      
     }
   }
   
@@ -455,135 +814,369 @@ void DrawWithWeights() {
   // binned
   for (Int_t i=0; i<4; i++) {
 	for (Int_t j=0; j<iBinNums[i]; j++) {
+		
+	  // Fit the Sigma+ mass with gaussian
+	  massFunc[i][j] = new TF1("massFunc","gaus", 1.16,1.22);
+	  sigHistMM_pip_pim[i][j]->Sumw2();
+	  sigHistMM_pip_pim[i][j]->Fit(massFunc[i][j],"R");
+		
 	  // MM_pip_pim
-	  sigHistMM_pip_pim[i][j]->Draw("HIST");
+	  sigHistMM_pip_pim[i][j]->Draw();
 	  TString outFilename = outdir+"sigHistMM_pip_pim"+i+j+".png";
 	  c1->SaveAs(outFilename);
-	  bgHistMM_pip_pim[i][j]->Draw("HIST");
+	  bgHistMM_pip_pim[i][j]->Draw();
 	  outFilename = outdir+"bgHistMM_pip_pim"+i+j+".png";
 	  c1->SaveAs(outFilename);
 
+	  // Fit the pi0 mass with gaussian
+	  massFunc[i][j] = new TF1("massFunc","gaus", 0.09,0.16);
+	  sigHistMM_p_pip_pim[i][j]->Sumw2();
+	  sigHistMM_p_pip_pim[i][j]->Fit(massFunc[i][j],"R");
+	  
 	  // MM_p_pip_pim
-	  sigHistMM_p_pip_pim[i][j]->Draw("HIST");
+	  sigHistMM_p_pip_pim[i][j]->Draw();
 	  outFilename = outdir+"sigHistMM_p_pip_pim"+i+j+".png";
 	  c1->SaveAs(outFilename);
-	  bgHistMM_p_pip_pim[i][j]->Draw("HIST");
+	  bgHistMM_p_pip_pim[i][j]->Draw();
 	  outFilename = outdir+"bgHistMM_p_pip_pim"+i+j+".png";
 	  c1->SaveAs(outFilename);
 	  
+	  // Fit the K0 mass with gaussian
+	  massFunc[i][j] = new TF1("massFunc","gaus", 0.49,0.505);
+	  sigHistM_pip_pim[i][j]->Sumw2();
+	  sigHistM_pip_pim[i][j]->Fit(massFunc[i][j],"R");
+
 	  // M_pip_pim
-	  sigHistM_pip_pim[i][j]->Draw("HIST");
+	  sigHistM_pip_pim[i][j]->Draw();
 	  outFilename = outdir+"sigHistM_pip_pim"+i+j+".png";
 	  c1->SaveAs(outFilename);
-	  bgHistM_pip_pim[i][j]->Draw("HIST");
+	  bgHistM_pip_pim[i][j]->Draw();
 	  outFilename = outdir+"bgHistM_pip_pim"+i+j+".png";
 	  c1->SaveAs(outFilename);	  
 
 	  // MM_p
-	  sigHistMM_p[i][j]->Draw("HIST");
+	  sigHistMM_p[i][j]->Draw();
 	  outFilename = outdir+"sigHistMM_p"+i+j+".png";
 	  c1->SaveAs(outFilename);
-	  bgHistMM_p[i][j]->Draw("HIST");
+	  bgHistMM_p[i][j]->Draw();
 	  outFilename = outdir+"bgHistMM_p"+i+j+".png";
 	  c1->SaveAs(outFilename);
 	  
 	  // cosX
-	  sigHistCosX[i][j]->Draw("HIST");
+	  sigHistCosX[i][j]->Draw();
 	  outFilename = outdir+"sigHistCosX"+i+j+".png";
 	  c1->SaveAs(outFilename);
-	  bgHistCosX[i][j]->Draw("HIST");
+	  bgHistCosX[i][j]->Draw();
 	  outFilename = outdir+"bgHistCosX"+i+j+".png";
 	  c1->SaveAs(outFilename);
 
 	  // cosY
-	  sigHistCosY[i][j]->Draw("HIST");
+	  sigHistCosY[i][j]->Draw();
 	  outFilename = outdir+"sigHistCosY"+i+j+".png";
 	  c1->SaveAs(outFilename);
-	  bgHistCosY[i][j]->Draw("HIST");
+	  bgHistCosY[i][j]->Draw("");
 	  outFilename = outdir+"bgHistCosY"+i+j+".png";
 	  c1->SaveAs(outFilename);
 	  
 	  // cosZ
-	  sigHistCosZ[i][j]->Draw("HIST");
+	  sigHistCosZ[i][j]->Draw("");
 	  outFilename = outdir+"sigHistCosZ"+i+j+".png";
 	  c1->SaveAs(outFilename);
-	  bgHistCosZ[i][j]->Draw("HIST");
+	  bgHistCosZ[i][j]->Draw("");
 	  outFilename = outdir+"bgHistCosZ"+i+j+".png";
 	  c1->SaveAs(outFilename);	  
 
 	  // sigHistPhiK0Para
-	  sigHistPhiK0Para[i][j]->Draw("HIST");
+	  sigHistPhiK0Para[i][j]->Draw("");
 	  outFilename = outdir+"sigHistPhiK0Para"+i+j+".png";
 	  c1->SaveAs(outFilename);
-	  bgHistPhiK0Para[i][j]->Draw("HIST");
+	  bgHistPhiK0Para[i][j]->Draw("");
 	  outFilename = outdir+"bgHistPhiK0Para"+i+j+".png";
 	  c1->SaveAs(outFilename);	 
 	  
 	  // sigHistPhiK0Perp
-	  sigHistPhiK0Perp[i][j]->Draw("HIST");
+	  sigHistPhiK0Perp[i][j]->Draw("");
 	  outFilename = outdir+"sigHistPhiK0Perp"+i+j+".png";
 	  c1->SaveAs(outFilename);
-	  bgHistPhiK0Perp[i][j]->Draw("HIST");
+	  bgHistPhiK0Perp[i][j]->Draw("");
 	  outFilename = outdir+"bgHistPhiK0Perp"+i+j+".png";
-	  c1->SaveAs(outFilename);		
+	  c1->SaveAs(outFilename);	
+	  
+	  // correlation
+	  allHistK0CosX[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"allHistK0CosX"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  sigHistK0CosX[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"sigHistK0CosX"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  bgHistK0CosX[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"bgHistK0CosX"+i+j+".png";
+	  c1->SaveAs(outFilename);
+
+	  allHistK0CosY[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"allHistK0CosY"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  sigHistK0CosY[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"sigHistK0CosY"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  bgHistK0CosY[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"bgHistK0CosY"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  
+	  allHistK0CosZ[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"allHistK0CosZ"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  sigHistK0CosZ[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"sigHistK0CosZ"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  bgHistK0CosZ[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"bgHistK0CosZ"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  
+	  allHistK0phiK0[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"allHistK0phiK0"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  sigHistK0phiK0[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"sigHistK0phiK0"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  bgHistK0phiK0[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"bgHistK0phiK0"+i+j+".png";
+	  c1->SaveAs(outFilename);
+
+	  allHistK0pol[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"allHistK0pol"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  sigHistK0pol[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"sigHistK0pol"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  bgHistK0pol[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"bgHistK0pol"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  
+	  allHistpi0CosX[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"allHistpi0CosX"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  sigHistpi0CosX[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"sigHistpi0CosX"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  bgHistpi0CosX[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"bgHistpi0CosX"+i+j+".png";
+	  c1->SaveAs(outFilename);
+
+	  allHistpi0CosY[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"allHistpi0CosY"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  sigHistpi0CosY[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"sigHistpi0CosY"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  bgHistpi0CosY[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"bgHistpi0CosY"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  
+	  allHistpi0CosZ[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"allHistpi0CosZ"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  sigHistpi0CosZ[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"sigHistpi0CosZ"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  bgHistpi0CosZ[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"bgHistpi0CosZ"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  
+	  allHistpi0phiK0[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"allHistpi0phiK0"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  sigHistpi0phiK0[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"sigHistpi0phiK0"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  bgHistpi0phiK0[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"bgHistpi0phiK0"+i+j+".png";
+	  c1->SaveAs(outFilename);
+
+	  allHistpi0pol[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"allHistpi0pol"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  sigHistpi0pol[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"sigHistpi0pol"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  bgHistpi0pol[i][j]->Draw("COLZ");	
+	  outFilename = outdir+"bgHistpi0pol"+i+j+".png";
+	  c1->SaveAs(outFilename);	  
 	  
 	}
   }
   // unbinned
+  
+  // Fit the Sigma+ mass with gaussian
+  massFunc[0][0] = new TF1("massFunc","gaus", 1.16,1.22);
+  sigHistMM_pip_pimAll->Sumw2();
+  sigHistMM_pip_pimAll->Fit(massFunc[0][0],"R");
+  
   // MM_pip_pim
-  sigHistMM_pip_pimAll->Draw("HIST");
+  sigHistMM_pip_pimAll->Draw("");
   TString outFilename = outdir+"sigHistMM_pip_pimAll.png";
   c1->SaveAs(outFilename);
-  bgHistMM_pip_pimAll->Draw("HIST");
+  bgHistMM_pip_pimAll->Draw("");
   outFilename = outdir+"bgHistMM_pip_pimAll.png";
   c1->SaveAs(outFilename);
 
+  // Fit the pi0 mass with gaussian
+  massFunc[0][0] = new TF1("massFunc","gaus", 0.09,0.16);
+  sigHistMM_p_pip_pimAll->Sumw2();
+  sigHistMM_p_pip_pimAll->Fit(massFunc[0][0],"R");
+
   // MM_p_pip_pim
-  sigHistMM_p_pip_pimAll->Draw("HIST");
+  sigHistMM_p_pip_pimAll->Draw("");
   outFilename = outdir+"sigHistMM_p_pip_pimAll.png";
   c1->SaveAs(outFilename);
-  bgHistMM_p_pip_pimAll->Draw("HIST");
+  bgHistMM_p_pip_pimAll->Draw("");
   outFilename = outdir+"bgHistMM_p_pip_pimAll.png";
   c1->SaveAs(outFilename);
+
+  // Fit the K0 mass with gaussian
+  massFunc[0][0] = new TF1("massFunc","gaus", 0.49,0.505);
+  sigHistM_pip_pimAll->Sumw2();
+  sigHistM_pip_pimAll->Fit(massFunc[0][0],"R");
   
   // M_pip_pim
-  sigHistM_pip_pimAll->Draw("HIST");
+  sigHistM_pip_pimAll->Draw("");
   outFilename = outdir+"sigHistM_pip_pimAll.png";
   c1->SaveAs(outFilename);
-  bgHistM_pip_pimAll->Draw("HIST");
+  bgHistM_pip_pimAll->Draw("");
   outFilename = outdir+"bgHistM_pip_pimAll.png";
   c1->SaveAs(outFilename);  
 
   // MM_p
-  sigHistMM_pAll->Draw("HIST");
+  sigHistMM_pAll->Draw("");
   outFilename = outdir+"sigHistMM_pAll.png";
   c1->SaveAs(outFilename);
-  bgHistMM_pAll->Draw("HIST");
+  bgHistMM_pAll->Draw("");
   outFilename = outdir+"bgHistMM_pAll.png";
   c1->SaveAs(outFilename);
   
   // cosX
-  sigHistCosXAll->Draw("HIST");
+  sigHistCosXAll->Draw("");
   outFilename = outdir+"sigHistCosXAll.png";
   c1->SaveAs(outFilename);
-  bgHistCosXAll->Draw("HIST");
+  bgHistCosXAll->Draw("");
   outFilename = outdir+"bgHistCosXAll.png";
   c1->SaveAs(outFilename);
 
   // cosY
-  sigHistCosYAll->Draw("HIST");
+  sigHistCosYAll->Draw("");
   outFilename = outdir+"sigHistCosYAll.png";
   c1->SaveAs(outFilename);
-  bgHistCosYAll->Draw("HIST");
+  bgHistCosYAll->Draw("");
   outFilename = outdir+"bgHistCosYAll.png";
   c1->SaveAs(outFilename);
   
   // cosZ
-  sigHistCosZAll->Draw("HIST");
+  sigHistCosZAll->Draw("");
   outFilename = outdir+"sigHistCosZAll.png";
   c1->SaveAs(outFilename);
-  bgHistCosZAll->Draw("HIST");
+  bgHistCosZAll->Draw("");
   outFilename = outdir+"bgHistCosZAll.png";
   c1->SaveAs(outFilename);	  
+
+  // correlation  
+  allHistK0CosXAll->Draw("COLZ");	
+  outFilename = outdir+"allHistK0CosXAll.png";
+  c1->SaveAs(outFilename);
+  sigHistK0CosXAll->Draw("COLZ");	
+  outFilename = outdir+"sigHistK0CosXAll.png";
+  c1->SaveAs(outFilename);
+  bgHistK0CosXAll->Draw("COLZ");	
+  outFilename = outdir+"bgHistK0CosXAll.png";
+  c1->SaveAs(outFilename);
+
+  allHistK0CosYAll->Draw("COLZ");	
+  outFilename = outdir+"allHistK0CosYAll.png";
+  c1->SaveAs(outFilename);
+  sigHistK0CosYAll->Draw("COLZ");	
+  outFilename = outdir+"sigHistK0CosYAll.png";
+  c1->SaveAs(outFilename);
+  bgHistK0CosYAll->Draw("COLZ");	
+  outFilename = outdir+"bgHistK0CosYAll.png";
+  c1->SaveAs(outFilename);
   
+  allHistK0CosZAll->Draw("COLZ");	
+  outFilename = outdir+"allHistK0CosZAll.png";
+  c1->SaveAs(outFilename);
+  sigHistK0CosZAll->Draw("COLZ");	
+  outFilename = outdir+"sigHistK0CosZAll.png";
+  c1->SaveAs(outFilename);
+  bgHistK0CosZAll->Draw("COLZ");	
+  outFilename = outdir+"bgHistK0CosZAll.png";
+  c1->SaveAs(outFilename);
+  
+  allHistK0phiK0All->Draw("COLZ");	
+  outFilename = outdir+"allHistK0phiK0All.png";
+  c1->SaveAs(outFilename);
+  sigHistK0phiK0All->Draw("COLZ");	
+  outFilename = outdir+"sigHistK0phiK0All.png";
+  c1->SaveAs(outFilename);
+  bgHistK0phiK0All->Draw("COLZ");	
+  outFilename = outdir+"bgHistK0phiK0All.png";
+  c1->SaveAs(outFilename);
+  
+  allHistK0polAll->Draw("COLZ");	
+  outFilename = outdir+"allHistK0polAll.png";
+  c1->SaveAs(outFilename);
+  sigHistK0polAll->Draw("COLZ");	
+  outFilename = outdir+"sigHistK0polAll.png";
+  c1->SaveAs(outFilename);
+  bgHistK0polAll->Draw("COLZ");	
+  outFilename = outdir+"bgHistK0polAll.png";
+  c1->SaveAs(outFilename);
+  
+allHistpi0CosXAll->Draw("COLZ");	
+  outFilename = outdir+"allHistpi0CosXAll.png";
+  c1->SaveAs(outFilename);
+  sigHistpi0CosXAll->Draw("COLZ");	
+  outFilename = outdir+"sigHistpi0CosXAll.png";
+  c1->SaveAs(outFilename);
+  bgHistpi0CosXAll->Draw("COLZ");	
+  outFilename = outdir+"bgHistpi0CosXAll.png";
+  c1->SaveAs(outFilename);
+
+  allHistpi0CosYAll->Draw("COLZ");	
+  outFilename = outdir+"allHistpi0CosYAll.png";
+  c1->SaveAs(outFilename);
+  sigHistpi0CosYAll->Draw("COLZ");	
+  outFilename = outdir+"sigHistpi0CosYAll.png";
+  c1->SaveAs(outFilename);
+  bgHistpi0CosYAll->Draw("COLZ");	
+  outFilename = outdir+"bgHistpi0CosYAll.png";
+  c1->SaveAs(outFilename);
+  
+  allHistpi0CosZAll->Draw("COLZ");	
+  outFilename = outdir+"allHistpi0CosZAll.png";
+  c1->SaveAs(outFilename);
+  sigHistpi0CosZAll->Draw("COLZ");	
+  outFilename = outdir+"sigHistpi0CosZAll.png";
+  c1->SaveAs(outFilename);
+  bgHistpi0CosZAll->Draw("COLZ");	
+  outFilename = outdir+"bgHistpi0CosZAll.png";
+  c1->SaveAs(outFilename);
+  
+  allHistpi0phiK0All->Draw("COLZ");	
+  outFilename = outdir+"allHistpi0phiK0All.png";
+  c1->SaveAs(outFilename);
+  sigHistpi0phiK0All->Draw("COLZ");	
+  outFilename = outdir+"sigHistpi0phiK0All.png";
+  c1->SaveAs(outFilename);
+  bgHistpi0phiK0All->Draw("COLZ");	
+  outFilename = outdir+"bgHistpi0phiK0All.png";
+  c1->SaveAs(outFilename);
+  
+  allHistpi0polAll->Draw("COLZ");	
+  outFilename = outdir+"allHistpi0polAll.png";
+  c1->SaveAs(outFilename);
+  sigHistpi0polAll->Draw("COLZ");	
+  outFilename = outdir+"sigHistpi0polAll.png";
+  c1->SaveAs(outFilename);
+  bgHistpi0polAll->Draw("COLZ");	
+  outFilename = outdir+"bgHistpi0polAll.png";
+  c1->SaveAs(outFilename);
+    
 }

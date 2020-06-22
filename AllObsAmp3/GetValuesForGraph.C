@@ -43,7 +43,7 @@ void GetValuesForGraph() {
 		
 				TH1F* hist = new TH1F("hist","",100,-1.2,1.2);
 				std::string drawStr = obs+">>hist";
-				MCMCTree->Draw(drawStr.c_str());
+				MCMCTree->Draw(drawStr.c_str(),"Entry$>50");
 				
 				xString = xString + binName + ",";
 				yString = yString + hist->GetMean() + ",";
