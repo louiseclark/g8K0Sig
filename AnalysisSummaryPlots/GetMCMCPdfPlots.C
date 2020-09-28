@@ -1,20 +1,20 @@
 #include <dirent.h>
-#include <string>
+#include <string.h>
 
 void GetMCMCPdfPlots() {
 	
 	//std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3/out1/";
-	std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3_test5/out1/";
+	std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3_test13/out1/";
 	
 	string burnIn = "50";
 	
 	auto topDir = opendir(path.c_str());
 	struct dirent *binDir;
 	
-	//TString outdir = "/home/louise/public_html/html/images/MCMCPdfs/";
-	TString outdir = "/home/louise/public_html/html/images/st5/MCMCPdfs/";
+	TString outdir = "/home/louise/public_html/html/images/st13/MCMCPdfs/";
 	gStyle->SetOptStat(0);
 	string obs[7] = {"B","T","Ox","Oz","R","Cx","Cz"};
+	string obsAx[7] = {"#Sigma","T","O_{x}","O_{z}","P","C_{x}","C_{z}"};
 	
 	std::string dirStr;
 	std::string binPath;
@@ -47,13 +47,18 @@ void GetMCMCPdfPlots() {
 				cout << fileName << endl;
 				TFile* infile = TFile::Open(fileName.c_str());
 				TTree *MCMCTree = (TTree*)infile->Get("MCMCTree");
-		
-				TH1F* h= new TH1F("hist","",100,-1.2,1.2);
-				std::string drawStr = obs[i]+">>hist";
-				h->GetXaxis()->SetTitle(obs[i].c_str());
+				
+				TH1F* h= new TH1F("PDF","",100,-1.2,1.2);
+				std::string drawStr = obs[i]+">>PDF";
 				std::string burnStr = "Entry$>="+burnIn;
+				cout << "drawStr " << drawStr << endl;
+				cout << "burnStr " << burnStr << endl;
 				MCMCTree->Draw(drawStr.c_str(),burnStr.c_str());
-				h->SetTitle(dirStr.c_str());
+				
+				h->GetXaxis()->SetTitle(obsAx[i].c_str());
+				std::string titleStr = "cos(#theta_{K0}) = " + dirStr.substr(10,dirStr.length()-22) +
+									   " E_{#gamma} = " + dirStr.substr(dirStr.length()-5,4);
+				h->SetTitle(titleStr.c_str());
 										
 				h->Draw();
 					

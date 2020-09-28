@@ -4,7 +4,7 @@
 void GetValuesForGraph() {
 	
 	
-	std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3_test5/out1/";
+	std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3_test12/out1/";
 	string eBins[4] = {"1.23","1.48","1.73","1.98"};
 	
 	std::string obs[] = {"B","Ox","Oz","R","T","Cx","Cz"};
@@ -14,9 +14,9 @@ void GetValuesForGraph() {
 		ofstream outfile;
 		outfile.open("out1/ValuesForGraph"+obs[obsNum]+".txt");
 		
-		std::string xArrString = "st5"+obs[obsNum]+"x=[";
-		std::string yArrString = "st5"+obs[obsNum]+"y=[";
-		std::string yErrArrString = "st5"+obs[obsNum]+"y_err=[";
+		std::string xArrString = "st12"+obs[obsNum]+"x=[";
+		std::string yArrString = "st12"+obs[obsNum]+"y=[";
+		std::string yErrArrString = "st12"+obs[obsNum]+"y_err=[";
 
 		for (int i=0; i<4; i++) {
 		

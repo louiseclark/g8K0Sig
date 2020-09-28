@@ -3,7 +3,7 @@
 
 void CreateCsvAllBins() {
 		
-	std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3/out1/";
+	std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3_test11/out1/";
 	auto topDir = opendir(path.c_str());
 	struct dirent *binDir;
 	
@@ -22,7 +22,7 @@ void CreateCsvAllBins() {
 			std::string binPath = path + binDir->d_name;
 			auto dir = opendir(binPath.c_str());
 					
-			std::string fileName = path + dirStr +  "/ResultsHSRooMcmcUniform2Seq.root";
+			std::string fileName = path + dirStr +  "/ResultsHSRooMcmcSeq.root";
 			cout << fileName << endl;
 			TFile *infileObs = TFile::Open(fileName.c_str());
 			TTree *MCMCTreeObs = (TTree*)infileObs->Get("MCMCTree");

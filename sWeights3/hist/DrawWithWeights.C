@@ -1,14 +1,14 @@
 #include <string>
 
 // Run with
-// root --hsdata DrawWithWeights.C
+// brufit DrawWithWeights.C
 
   // Baseline
   //TString weightsDir = "/home/louise/g8K0Sig/code/sWeights3/";
   //TString outdir = "/home/louise/public_html/html/images/weighted/";
   // Systematic tests
-  TString weightsDir = "/home/louise/g8K0Sig/code/sWeights3_test10/";
-  TString outdir = "/home/louise/public_html/html/images/st10/weighted/";
+  TString weightsDir = "/home/louise/g8K0Sig/code/sWeights3_test4/";
+  TString outdir = "/home/louise/public_html/html/images/st4/weighted/";
   
   // Define bins
   Double_t eBinLimits[] = {1.1, 1.35, 1.6, 1.85, 2.1};
@@ -56,6 +56,22 @@
   TH1F* bgHistCosZ[4][8];
   TH1F* sigHistCosZAll;
   TH1F* bgHistCosZAll;  
+  
+  TH1F* sigHistEg[4][8];
+  TH1F* bgHistEg[4][8];
+  TH1F* sigHistEgAll;
+  TH1F* bgHistEgAll;  
+  
+  TH1F* sigHistt[4][8];
+  TH1F* bgHistt[4][8];
+  TH1F* sigHisttAll;
+  TH1F* bgHisttAll;  
+    
+  TH1F* sigHistCosth[4][8];
+  TH1F* bgHistCosth[4][8];
+  TH1F* sigHistCosthAll;
+  TH1F* bgHistCosthAll;  
+  
   
   TH1F* sigHistPhiK0Para[4][8];  
   TH1F* bgHistPhiK0Para[4][8];
@@ -183,11 +199,12 @@ void DrawWithWeights() {
  
   TChain chain("HSParticles");
   chain.AddFile("/w/work0/home/louise/g8K0Sig/convert_output/filepPi0_all.root");
-  Double_t fgID,costhK0CMS, Egamma, MM_pip_pim, MM_p_pip_pim, M_pip_pim, MM_p, cosX, cosY, cosZ, phiK0, pol;
+  Double_t fgID,costhK0CMS, Egamma, t, MM_pip_pim, MM_p_pip_pim, M_pip_pim, MM_p, cosX, cosY, cosZ, phiK0, pol;
   Int_t polState;
   chain.SetBranchAddress("fgID",&fgID);
   chain.SetBranchAddress("costhK0CMS",&costhK0CMS);
   chain.SetBranchAddress("Egamma",&Egamma);
+  chain.SetBranchAddress("t",&t);
   chain.SetBranchAddress("MM_pip_pim",&MM_pip_pim);
   chain.SetBranchAddress("MM_p_pip_pim",&MM_p_pip_pim);
   chain.SetBranchAddress("M_pip_pim",&M_pip_pim);
@@ -261,6 +278,31 @@ void DrawWithWeights() {
 		bgHistCosZ[i][j] = new TH1F("Integrated BG Weight",histTitle.str().c_str(), 75, -1.0, 1.0);
 		bgHistCosZ[i][j]->GetXaxis()->SetTitle("cos #theta_{z}");		
 		bgHistCosZ[i][j]->SetLineWidth(2);			
+
+		// Egamma
+		sigHistEg[i][j] = new TH1F("Integrated Signal Weight",histTitle.str().c_str(), 100, 1.0, 2.2);
+		sigHistEg[i][j]->GetXaxis()->SetTitle("E_{#gamma} (GeV)");
+		sigHistEg[i][j]->SetLineWidth(2);
+		bgHistEg[i][j] = new TH1F("Integrated BG Weight",histTitle.str().c_str(), 100, 1.0, 2.2);
+		bgHistEg[i][j]->GetXaxis()->SetTitle("E_{#gamma} (GeV)");		
+		bgHistEg[i][j]->SetLineWidth(2);			
+
+		// t
+		sigHistt[i][j] = new TH1F("Integrated Signal Weight",histTitle.str().c_str(), 100, -0.3, 2.2);
+		sigHistt[i][j]->GetXaxis()->SetTitle("t (GeV/c)");
+		sigHistt[i][j]->SetLineWidth(2);
+		bgHistt[i][j] = new TH1F("Integrated BG Weight",histTitle.str().c_str(), 100, -0.3, 2.2);
+		bgHistt[i][j]->GetXaxis()->SetTitle("t (GeV/c)");		
+		bgHistt[i][j]->SetLineWidth(2);			
+
+		// costh
+		sigHistCosth[i][j] = new TH1F("Integrated Signal Weight",histTitle.str().c_str(), 75, -1.0, 1.0);
+		sigHistCosth[i][j]->GetXaxis()->SetTitle("cos #theta_{K0}");
+		sigHistCosth[i][j]->SetLineWidth(2);
+		bgHistCosth[i][j] = new TH1F("Integrated BG Weight",histTitle.str().c_str(), 75, -1.0, 1.0);
+		bgHistCosth[i][j]->GetXaxis()->SetTitle("cos #theta_{K0}");		
+		bgHistCosth[i][j]->SetLineWidth(2);			
+
 		
 		// phiK0 PARA		
 		sigHistPhiK0Para[i][j] = new TH1F("Integrated Signal Weight (PARA)",histTitle.str().c_str(), 75, -3.14, 3.14);		
@@ -439,6 +481,31 @@ void DrawWithWeights() {
 	bgHistCosZAll = new TH1F("Integrated BG Weight","All events", 75, -1.0, 1.0);
 	bgHistCosZAll->GetXaxis()->SetTitle("cos #theta_{z}");		
 	bgHistCosZAll->SetLineWidth(2);	
+	
+	// Egamma
+	sigHistEgAll = new TH1F("Integrated Signal Weight","All events", 100, 1.0, 2.2);
+	sigHistEgAll->GetXaxis()->SetTitle("E_{#gamma} (GeV)");
+	sigHistEgAll->SetLineWidth(2);
+	bgHistEgAll = new TH1F("Integrated BG Weight","All events", 100, 1.0, 2.2);
+	bgHistEgAll->GetXaxis()->SetTitle("E_{#gamma} (GeV)");		
+	bgHistEgAll->SetLineWidth(2);			
+
+	// t
+	sigHisttAll = new TH1F("Integrated Signal Weight","All events", 100, -0.3, 2.2);
+	sigHisttAll->GetXaxis()->SetTitle("t (GeV/c)");
+	sigHisttAll->SetLineWidth(2);
+	bgHisttAll = new TH1F("Integrated BG Weight","All events", 100, -0.3, 2.2);
+	bgHisttAll->GetXaxis()->SetTitle("t (GeV/c)");		
+	bgHisttAll->SetLineWidth(2);			
+
+	// costh
+	sigHistCosthAll = new TH1F("Integrated Signal Weight","All events", 75, -1.0, 1.0);
+	sigHistCosthAll->GetXaxis()->SetTitle("cos #theta_{K0}");
+	sigHistCosthAll->SetLineWidth(2);
+	bgHistCosthAll = new TH1F("Integrated BG Weight","All events", 75, -1.0, 1.0);
+	bgHistCosthAll->GetXaxis()->SetTitle("cos #theta_{K0}");		
+	bgHistCosthAll->SetLineWidth(2);			
+
   
   // correlation
 	allHistK0CosXAll = new TH2F("All events","All events", 75, 0.44, 0.56, 75, -1.0, 1.0);
@@ -580,6 +647,19 @@ void DrawWithWeights() {
       sigHistCosZ[currentEBin][currentThBin]->Fill(cosZ,wts[currentEBin]->GetWeight("Signal"));
       bgHistCosZ[currentEBin][currentThBin]->Fill(cosZ,wts[currentEBin]->GetWeight("BG"));
       
+      // Egamma
+      sigHistEg[currentEBin][currentThBin]->Fill(Egamma,wts[currentEBin]->GetWeight("Signal"));
+      bgHistEg[currentEBin][currentThBin]->Fill(Egamma,wts[currentEBin]->GetWeight("BG"));
+
+      // t
+      sigHistt[currentEBin][currentThBin]->Fill(t,wts[currentEBin]->GetWeight("Signal"));
+      bgHistt[currentEBin][currentThBin]->Fill(t,wts[currentEBin]->GetWeight("BG"));
+
+      // costh
+      sigHistCosth[currentEBin][currentThBin]->Fill(costhK0CMS,wts[currentEBin]->GetWeight("Signal"));
+      bgHistCosth[currentEBin][currentThBin]->Fill(costhK0CMS,wts[currentEBin]->GetWeight("BG"));
+      
+      
       // sigHistPhiK0Para
       if (polState==1) {
 		sigHistPhiK0Para[currentEBin][currentThBin]->Fill(phiK0,wts[currentEBin]->GetWeight("Signal"));
@@ -620,6 +700,19 @@ void DrawWithWeights() {
       // cosZ
       sigHistCosZAll->Fill(cosZ,wts[currentEBin]->GetWeight("Signal"));
       bgHistCosZAll->Fill(cosZ,wts[currentEBin]->GetWeight("BG"));
+
+      // Egamma
+      sigHistEgAll->Fill(Egamma,wts[currentEBin]->GetWeight("Signal"));
+      bgHistEgAll->Fill(Egamma,wts[currentEBin]->GetWeight("BG"));
+
+      // t
+      sigHisttAll->Fill(t,wts[currentEBin]->GetWeight("Signal"));
+      bgHisttAll->Fill(t,wts[currentEBin]->GetWeight("BG"));
+
+      // costh
+      sigHistCosthAll->Fill(costhK0CMS,wts[currentEBin]->GetWeight("Signal"));
+      bgHistCosthAll->Fill(costhK0CMS,wts[currentEBin]->GetWeight("BG"));
+
       
       // correlation
 	  sigHistK0CosX[currentEBin][currentThBin]->Fill(M_pip_pim,cosX,wts[currentEBin]->GetWeight("Signal"));
@@ -886,6 +979,31 @@ void DrawWithWeights() {
 	  outFilename = outdir+"bgHistCosZ"+i+j+".png";
 	  c1->SaveAs(outFilename);	  
 
+	  // Egamma
+	  sigHistEg[i][j]->Draw("");
+	  outFilename = outdir+"sigHistEg"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  bgHistEg[i][j]->Draw("");
+	  outFilename = outdir+"bgHistEg"+i+j+".png";
+	  c1->SaveAs(outFilename);	  
+
+	  // t
+	  sigHistt[i][j]->Draw("");
+	  outFilename = outdir+"sigHistt"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  bgHistt[i][j]->Draw("");
+	  outFilename = outdir+"bgHistt"+i+j+".png";
+	  c1->SaveAs(outFilename);	  
+
+	  // costh
+	  sigHistCosth[i][j]->Draw("");
+	  outFilename = outdir+"sigHistCosth"+i+j+".png";
+	  c1->SaveAs(outFilename);
+	  bgHistCosth[i][j]->Draw("");
+	  outFilename = outdir+"bgHistCosth"+i+j+".png";
+	  c1->SaveAs(outFilename);	  
+
+
 	  // sigHistPhiK0Para
 	  sigHistPhiK0Para[i][j]->Draw("");
 	  outFilename = outdir+"sigHistPhiK0Para"+i+j+".png";
@@ -1077,6 +1195,30 @@ void DrawWithWeights() {
   bgHistCosZAll->Draw("");
   outFilename = outdir+"bgHistCosZAll.png";
   c1->SaveAs(outFilename);	  
+
+  // Egamma
+  sigHistEgAll->Draw("");
+  outFilename = outdir+"sigHistEgAll.png";
+  c1->SaveAs(outFilename);
+  bgHistEgAll->Draw("");
+  outFilename = outdir+"bgHistEgAll.png";
+  c1->SaveAs(outFilename);	  
+
+  // t
+  sigHisttAll->Draw("");
+  outFilename = outdir+"sigHisttAll.png";
+  c1->SaveAs(outFilename);
+  bgHisttAll->Draw("");
+  outFilename = outdir+"bgHisttAll.png";
+  c1->SaveAs(outFilename);	  
+
+  // costh
+  sigHistCosthAll->Draw("");
+  outFilename = outdir+"sigHistCosthAll.png";
+  c1->SaveAs(outFilename);
+  bgHistCosthAll->Draw("");
+  outFilename = outdir+"bgHistCosthAll.png";
+  c1->SaveAs(outFilename);	
 
   // correlation  
   allHistK0CosXAll->Draw("COLZ");	
