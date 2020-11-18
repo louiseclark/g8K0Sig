@@ -3,11 +3,11 @@
 
 void GetValuesForGraph() {
 	
-	
-	//std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3/out1/";
-	//std::string pref = "m";
-	std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3_test5/out1/";
-	std::string pref = "st5";
+	std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3_test16/out1/";
+	std::string pref = "st16";
+
+	ofstream outfile;
+	outfile.open(path+pref+"ValuesForGraph.txt");
 	
 	std::string burnIn = "50";
 	
@@ -16,9 +16,6 @@ void GetValuesForGraph() {
 	std::string obs[] = {"B","Ox","Oz","R","T","Cx","Cz"};
 	
 	for (int obsNum=0; obsNum<7; obsNum++) {
-	
-		ofstream outfile;
-		outfile.open(pref+"ValuesForGraph"+obs[obsNum]+".txt");
 		
 		std::string xArrString = pref+obs[obsNum]+"x=[";
 		std::string yArrString = pref+obs[obsNum]+"y=[";
@@ -79,6 +76,6 @@ void GetValuesForGraph() {
 		outfile << yArrString << "\n" << endl;
 		outfile << yErrArrString << "\n" << endl;
 		
-		outfile.close();
 		}
+		outfile.close();
 }

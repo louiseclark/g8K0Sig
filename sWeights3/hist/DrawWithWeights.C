@@ -7,8 +7,8 @@
   //TString weightsDir = "/home/louise/g8K0Sig/code/sWeights3/";
   //TString outdir = "/home/louise/public_html/html/images/weighted/";
   // Systematic tests
-  TString weightsDir = "/home/louise/g8K0Sig/code/sWeights3_test4/";
-  TString outdir = "/home/louise/public_html/html/images/st4/weighted/";
+  TString weightsDir = "/home/louise/g8K0Sig/code/sWeights3_test8/";
+  TString outdir = "/home/louise/public_html/html/images/st8/weighted/";
   
   // Define bins
   Double_t eBinLimits[] = {1.1, 1.35, 1.6, 1.85, 2.1};
@@ -198,7 +198,7 @@ void DrawWithWeights() {
   c1->cd(0); // set default canvas
  
   TChain chain("HSParticles");
-  chain.AddFile("/w/work0/home/louise/g8K0Sig/convert_output/filepPi0_all.root");
+  chain.AddFile("/w/work0/home/louise/g8K0Sig/convert_output3/filepPi0_all.root");
   Double_t fgID,costhK0CMS, Egamma, t, MM_pip_pim, MM_p_pip_pim, M_pip_pim, MM_p, cosX, cosY, cosZ, phiK0, pol;
   Int_t polState;
   chain.SetBranchAddress("fgID",&fgID);
@@ -909,7 +909,8 @@ void DrawWithWeights() {
 	for (Int_t j=0; j<iBinNums[i]; j++) {
 		
 	  // Fit the Sigma+ mass with gaussian
-	  massFunc[i][j] = new TF1("massFunc","gaus", 1.16,1.22);
+	  massFunc[i][j] = new TF1("massFunc","gaus", 1.16,1.21);
+	  //massFunc[i][j]->SetParLimits(2,0.002, 0.007);
 	  sigHistMM_pip_pim[i][j]->Sumw2();
 	  sigHistMM_pip_pim[i][j]->Fit(massFunc[i][j],"R");
 		

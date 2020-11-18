@@ -37,7 +37,7 @@
   RF.SetUp().FactoryPDF("ObsFit::LinPolFit(phiK0,cosX,cosY,cosZ,pol,polState,B,T,Ox,Oz,R)WEIGHTS@LikeData,/home/louise/g8K0Sig/code/simWeights/new/out/impWeights_tE.root,impWeights");
   RF.SetUp().LoadSpeciesPDF("LinPolFit",1);
   
-  // Peter
+  // Peter's sample code
   //
   //RF.SetUp().FactoryPDF("RooComponentsPDF::SDMES(0,{Theta_GJ_KMinus,phiAngle_GJ_KMinus,phiAngle_KPlus,polarisationAngle,polarisationDegree},=A:B;Rho011:C;Rho031:D;Rho03m1:E;Rho133:F;Rho111:G;Rho131:H;Rho13m1:I;Rho231:J;Rho23m1)WEIGHTS@LikeData,"+weightsDir+"/impWeights.root,impWeights");
 
@@ -70,10 +70,10 @@
   RF.LoadSimulated("HSParticles","/w/work0/home/louise/g8K0Sig/convert_output_MC/filepPi0_all.root","LinPolFit");
   
   //////////////////////////Load Weights
-  //RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test4/out_all_pi0K0_binned/Egamma1.23/Tweights.root");
-  //RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test4/out_all_pi0K0_binned/Egamma1.48/Tweights.root");
-  //RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test4/out_all_pi0K0_binned/Egamma1.73/Tweights.root");
-  RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test4/out_all_pi0K0_binned/Egamma1.98/Tweights.root");
+  //RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test8/out_all_pi0K0_binned/Egamma1.23/Tweights.root");
+  //RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test8/out_all_pi0K0_binned/Egamma1.48/Tweights.root");
+  //RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test8/out_all_pi0K0_binned/Egamma1.73/Tweights.root");
+  RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test8/out_all_pi0K0_binned/Egamma1.98/Tweights.root");
 
   RF.SetMinimiser(new RooMcmcSeq(2000,50,2)); // num of steps in final tree, burn in, inverse step size
   //RF.SetMinimiser(new RooMcmcUniform2Seq(2000,50,2)); // num of steps in final tree, burn in, inverse step size

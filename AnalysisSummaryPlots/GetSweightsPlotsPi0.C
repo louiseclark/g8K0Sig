@@ -3,13 +3,13 @@
 
 void GetSweightsPlotsPi0() {
 	
-	//std::string path = "/home/louise/g8K0Sig/code/sWeights3/out_all_pi0_binned/";
-	std::string path = "/home/louise/g8K0Sig/code/sWeights3_test7/out_all_pi0_binned/";
+	std::string path = "/home/louise/g8K0Sig/code/sWeights3/out_all_pi0_binned/";
+	//std::string path = "/home/louise/g8K0Sig/code/sWeights3_test7/out_all_pi0_binned/";
 	auto topDir = opendir(path.c_str());
 	struct dirent *eGammaDir;
 	
 	//TString outdir = "/home/louise/g8K0Sig/AnalysisSummary/html/images/sWeights/";
-	TString outdir = "/home/louise/public_html/html/images/st7/sWeights/";
+	std::string outdir = "/home/louise/public_html/html/images/st0/sWeights/";
 	gStyle->SetOptStat(0);
 	
 	// read the Egamma directories in the topDir
@@ -44,16 +44,18 @@ void GetSweightsPlotsPi0() {
 					h->Draw();
 					gPad->Update();
 					
-					//TPaveText *st = (TPaveText*)gPad->GetPrimitive("costhK0CMS-0.05_Egamma1.23_TotalPDF_paramBox");
 					TCanvas* c1 = (TCanvas*) gPad->GetListOfPrimitives()->First();
+					
 					std::string textName = dirStr2+"TotalPDF_paramBox";
 					TPaveText *st = (TPaveText*) c1->GetPrimitive(textName.c_str());
 					st->Delete();
-					//st->SetX1NDC(0.5); //new x start position
-					//st->SetX2NDC(0.5); //new x end position
-
+										
 					TPaveText* tit = (TPaveText*) c1->GetPrimitive("title");
-					tit->InsertText(dirStr2.c_str());
+					//tit->SetTextColor(kWhite);
+					//tit->InsertText("Test 1"); //dirStr2.c_str());
+					
+					TH1D* h1 = (TH1D*) c1->GetPrimitive("frame_a261eb0");
+					h1->GetXaxis()->SetTitle("test");
 					
 					gPad->Modified();
 					gPad->Update();

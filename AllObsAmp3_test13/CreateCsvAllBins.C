@@ -9,6 +9,8 @@ void CreateCsvAllBins() {
 	
 	ofstream outfile;
     outfile.open(path+"CsvAllBins.csv");
+    
+    int burnIn = 50;
 
 	// read the directories in the topDir
 	while (binDir=readdir(topDir)) {
@@ -34,8 +36,8 @@ void CreateCsvAllBins() {
 			MCMCTreeObs->SetBranchAddress("Oz",&Oz);
 			MCMCTreeObs->SetBranchAddress("R",&R);
 			MCMCTreeObs->SetBranchAddress("T",&T);
-					
-			for (int i=0; i<nObs; i++) {
+			
+			for (int i=burnIn; i<nObs; i++) {
 				MCMCTreeObs->GetEntry(i);
 				outfile << "B," << B << "," << dirStr << "\n";
 				outfile << "Ox," << Ox << "," << dirStr << "\n";
@@ -43,7 +45,6 @@ void CreateCsvAllBins() {
 				outfile << "R," << R << "," << dirStr << "\n";
 				outfile << "T," << T << "," << dirStr << "\n";
 			}
-			
 		}
 	}
 	closedir(topDir);

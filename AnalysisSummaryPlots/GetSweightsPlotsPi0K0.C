@@ -4,12 +4,12 @@
 void GetSweightsPlotsPi0K0() {
 	
 	//std::string path = "/home/louise/g8K0Sig/code/sWeights3/out_all_pi0K0_binned/";
-	std::string path = "/home/louise/g8K0Sig/code/sWeights3_test10/out_all_pi0K0_binned/";
+	std::string path = "/home/louise/g8K0Sig/code/sWeights3_test15/out_all_pi0K0_binned/";
 	auto topDir = opendir(path.c_str());
 	struct dirent *eGammaDir;
 	
 	//TString outdir = "/home/louise/g8K0Sig/AnalysisSummary/html/images/sWeights/";
-	TString outdir = "/home/louise/public_html/html/images/st10/sWeights/";
+	std::string outdir = "/home/louise/public_html/html/images/st15/sWeights/";
 	gStyle->SetOptStat(0);
 	
 	// read the Egamma directories in the topDir

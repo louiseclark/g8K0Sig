@@ -1,7 +1,7 @@
 //Run with 
-//root --hsfit FitObsBins.C > out1.log
+//brufit FitObsBins.C > out1.log
 // or 
-//root --hsfit FitObsBins.C | tee out1.log
+//brufit FitObsBins.C | tee out1.log
 {
  
   Loader::Compile("ObsFit.cxx");
@@ -10,7 +10,7 @@
   TString pwd = TString(gSystem->Getenv("PWD"))+"/";
   
   FitManager RF;
-  RF.SetUp().SetOutDir(pwd+"out1/");
+  RF.SetUp().SetOutDir(pwd+"outtest2/");
   ///////////////////////////////Load Variables  
   RF.SetUp().LoadVariable("phiK0[-3.14,3.14]");//going to fit this
   RF.SetUp().LoadVariable("cosX[-1.0,1.0]");
@@ -38,9 +38,9 @@
   ////////////////////////////Make Bins
     
   // Variable bins Egamma 1.1-1.35
-  //Double_t binLimits[] = {-1.0, -0.622, -0.39, -0.146, 0.054, 0.298, 1.0};
-  //RF.Bins().LoadBinVar("costhK0CMS",6,binLimits);
-  //RF.Bins().LoadBinVar("Egamma",1, 1.1, 1.35);
+  Double_t binLimits[] = {-1.0, -0.622, -0.39, -0.146, 0.054, 0.298, 1.0};
+  RF.Bins().LoadBinVar("costhK0CMS",6,binLimits);
+  RF.Bins().LoadBinVar("Egamma",1, 1.1, 1.35);
 
   // Variable bins Egamma 1.35-1.6
   //Double_t binLimits[] = {-1.0, -0.465, -0.275, -0.135, 0.005, 0.165, 0.345, 0.535, 1.0}; // 0.785
@@ -53,9 +53,9 @@
   //RF.Bins().LoadBinVar("Egamma",1, 1.6, 1.85);  
 
   // Variable bins Egamma 1.85-2.1
-  Double_t binLimits[] = {-1.0, 0.155, 1.0}; // 0.775
-  RF.Bins().LoadBinVar("costhK0CMS",2,binLimits);
-  RF.Bins().LoadBinVar("Egamma",1, 1.85, 2.1);
+  //Double_t binLimits[] = {-1.0, 0.155, 1.0}; // 0.775
+  //RF.Bins().LoadBinVar("costhK0CMS",2,binLimits);
+  //RF.Bins().LoadBinVar("Egamma",1, 1.85, 2.1);
    
   ///////////////////////////Load Data
   //RF.Data().BootStrap(2);
@@ -63,12 +63,19 @@
   RF.LoadSimulated("HSParticles","/w/work0/home/louise/g8K0Sig/convert_output_MC/filepPi0_all.root","LinPolFit");
   
   //////////////////////////Load Weights
-  //RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test8/out_all_pi0K0_binned/Egamma1.23/Tweights.root");
+  RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test8/out_all_pi0K0_binned/Egamma1.23/Tweights.root");
   //RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test8/out_all_pi0K0_binned/Egamma1.48/Tweights.root");
   //RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test8/out_all_pi0K0_binned/Egamma1.73/Tweights.root");
-  RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test8/out_all_pi0K0_binned/Egamma1.98/Tweights.root");
+  //RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test8/out_all_pi0K0_binned/Egamma1.98/Tweights.root");
 
+
+  // TEST ***********
+  //RF.SetMinimiser(new RooMcmcSeq(500,50,16)); // num of steps in final tree, burn in, inverse step size
+  
   RF.SetMinimiser(new RooMcmcSeq(2000,50,2)); // num of steps in final tree, burn in, inverse step size
+
+
+
   //RF.SetMinimiser(new RooMcmcUniform2Seq(2000,50,2)); // num of steps in final tree, burn in, inverse step size
   //use Minuit2(5) to run 5 fits and take the best likelihood
   //RF.SetMinimiser(new Minuit());
