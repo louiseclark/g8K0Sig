@@ -4,14 +4,14 @@
 void GetMCMCPdfPlots() {
 	
 	//std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3/out1/";
-	std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3_test13/out1/";
+	std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3_test22/out1/";
 	
 	string burnIn = "50";
 	
 	auto topDir = opendir(path.c_str());
 	struct dirent *binDir;
 	
-	TString outdir = "/home/louise/public_html/html/images/st13/MCMCPdfs/";
+	TString outdir = "/home/louise/public_html/html/images/st22/MCMCPdfs/";
 	gStyle->SetOptStat(0);
 	string obs[7] = {"B","T","Ox","Oz","R","Cx","Cz"};
 	string obsAx[7] = {"#Sigma","T","O_{x}","O_{z}","P","C_{x}","C_{z}"};
@@ -65,6 +65,12 @@ void GetMCMCPdfPlots() {
 				outFilename = outdir+obs[i].c_str()+"_"+dirStr.c_str()+"Pdf.png";
 				c1->SaveAs(outFilename);
 				c1->Clear();
+				
+				// Plot Fierz identities
+				//if (i==0) {
+				//    Double_t id1 = 
+				//}
+				
 				infile->Delete();
 				closedir(dir);
 					

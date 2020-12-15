@@ -3,11 +3,11 @@
 
 void GetMCMCFitPlotsBru() {
 	
-	std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3_test13/out1/";
+	std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3_test22/out1/";
 	auto topDir = opendir(path.c_str());
 	struct dirent *binDir;
 	
-	std::string outdir = "/home/louise/public_html/html/images/st13/MCMCFits/";
+	std::string outdir = "/home/louise/public_html/html/images/st22/MCMCFits/";
 	gStyle->SetOptStat(0);
 	string vars[5] = {"_cosX","_cosY","_cosZ","_phiK0","_pol"};
 	
@@ -46,15 +46,15 @@ void GetMCMCFitPlotsBru() {
 				h->Draw();
 				gPad->Update();
 					
-				//~ c1 = (TCanvas*) gPad->GetListOfPrimitives()->First();
-				//~ textName = dirStr+"TotalPDF_paramBox";
-				//~ TPaveText *st = (TPaveText*) c1->GetPrimitive(textName.c_str());
-				//~ st->Delete();
+				c1 = (TCanvas*) gPad->GetListOfPrimitives()->First();
+				textName = dirStr+"TotalPDF_paramBox";
+				TPaveText *st = (TPaveText*) c1->GetPrimitive(textName.c_str());
+				st->Delete();
 					
-				//~ TPaveText* tit = (TPaveText*) c1->GetPrimitive("title");
-				//~ tit->SetTextSize(0.055);
-				//~ tit->InsertText("");				
-				//~ tit->InsertText(dirStr.c_str());
+				TPaveText* tit = (TPaveText*) c1->GetPrimitive("title");
+				tit->SetTextSize(0.055);
+				tit->InsertText("");				
+			    tit->InsertText(dirStr.c_str());
 					
 				gPad->Modified();
 				gPad->Update();

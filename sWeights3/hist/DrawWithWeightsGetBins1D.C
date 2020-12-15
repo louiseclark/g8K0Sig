@@ -1,15 +1,15 @@
 // Run with
 // brufit DrawWithWeightsGetBins1D.C
 {
-    TString weightsDir = "/home/louise/g8K0Sig/code/sWeights3_test8/";
+    TString weightsDir = "/home/louise/g8K0Sig/code/sWeights3_test19/";
 	
     Weights* wts=new Weights("TotalWeights");
     
-	//Int_t numBins = 7;
+	//Int_t numBins = 6;
 	//Double_t minE = 1.1, maxE = 1.35;
     //wts->Merge(weightsDir+"out_all_pi0K0_binned/Egamma1.23/Tweights.root","histWeights0.root","HSsWeights");
 
-	//Int_t numBins = 9;
+	//Int_t numBins = 8;
     //Double_t minE = 1.35, maxE = 1.6;
     //wts->Merge(weightsDir+"out_all_pi0K0_binned/Egamma1.48/Tweights.root","histWeights1.root","HSsWeights");
 
@@ -29,7 +29,7 @@
 	chain.SetBranchAddress("costhK0CMS",&costhK0CMS);
 	chain.SetBranchAddress("Egamma",&Egamma);
 	
-	TH1F* hist=new TH1F("hist","hist",400, -1.0, 1.0);
+	TH1F* hist=new TH1F("hist","hist",800, -1.0, 1.0);
 	Double_t weight=0;
 
 	for(Int_t i=0;i<chain.GetEntries();i++){

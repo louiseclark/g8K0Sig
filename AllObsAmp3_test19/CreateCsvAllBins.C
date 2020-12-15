@@ -3,7 +3,7 @@
 
 void CreateCsvAllBins() {
 		
-	std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3_test13/out1/";
+	std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3_test19/out1/";
 	auto topDir = opendir(path.c_str());
 	struct dirent *binDir;
 	

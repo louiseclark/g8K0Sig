@@ -1,6 +1,4 @@
 //Run with 
-//brufit FitObsBins.C > out1.log
-// or 
 //brufit FitObsBins.C | tee out1.log
 {
  
@@ -45,25 +43,24 @@
   ////////////////////////////Make Bins
   // *** NEW BINS
   // Variable bins Egamma 1.1-1.35
-  //Double_t binLimits[] = {-1.0, -0.625, -0.425, -0.135, 0.075, 0.355, 1.0};
+  //Double_t binLimits[] = {-1.0, -0.62125, -0.43125, -0.13375, 0.07125, 0.35625, 1.0};
   //RF.Bins().LoadBinVar("costhK0CMS",6,binLimits);
   //RF.Bins().LoadBinVar("Egamma",1, 1.1, 1.35);
 
   // Variable bins Egamma 1.35-1.6
-  //Double_t binLimits[] = {-1.0, -0.515, -0.305, -0.155, -0.005, 0.165, 0.345, 0.565, 1.0}; 
+  //Double_t binLimits[] = {-1.0, -0.55625, -0.32625, -0.16125, -0.00875, 0.15375, 0.32625, 0.53875, 1.0}; 
   //RF.Bins().LoadBinVar("costhK0CMS",8,binLimits);
   //RF.Bins().LoadBinVar("Egamma",1, 1.35, 1.6);
   
   // Variable bins Egamma 1.6-1.85
-  //Double_t binLimits[] = {-1.0, -0.115, 0.135, 0.365, 0.535, 1.0}; 
+  //Double_t binLimits[] = {-1.0, -0.14375, 0.10375, 0.37375, 0.52875, 1.0}; 
   //RF.Bins().LoadBinVar("costhK0CMS",5,binLimits);
   //RF.Bins().LoadBinVar("Egamma",1, 1.6, 1.85);  
 
   // Variable bins Egamma 1.85-2.1
-  Double_t binLimits[] = {-1.0, 0.145, 1.0};
+  Double_t binLimits[] = {-1.0, 0.15125, 1.0};
   RF.Bins().LoadBinVar("costhK0CMS",2,binLimits);
   RF.Bins().LoadBinVar("Egamma",1, 1.85, 2.1);  
-
    
   ///////////////////////////Load Data
   //RF.Data().BootStrap(2);
@@ -71,10 +68,10 @@
   RF.LoadSimulated("HSParticles","/w/work0/home/louise/g8K0Sig/convert_output_MC/filepPi0_all.root","LinPolFit");
   
   //////////////////////////Load Weights
-  //RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test8/out_all_pi0K0_binned/Egamma1.23/Tweights.root");
-  //RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test8/out_all_pi0K0_binned/Egamma1.48/Tweights.root");
-  //RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test8/out_all_pi0K0_binned/Egamma1.73/Tweights.root");
-  RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test8/out_all_pi0K0_binned/Egamma1.98/Tweights.root");
+  //RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test19/out_all_pi0K0_binned/Egamma1.23/Tweights.root");
+  //RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test19/out_all_pi0K0_binned/Egamma1.48/Tweights.root");
+  //RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test19/out_all_pi0K0_binned/Egamma1.73/Tweights.root");
+  RF.Data().LoadWeights("Signal","/home/louise/g8K0Sig/code/sWeights3_test19/out_all_pi0K0_binned/Egamma1.98/Tweights.root");
 
   RF.SetMinimiser(new RooMcmcSeq(2000,50,2)); // num of steps in final tree, burn in, inverse step size
   //RF.SetMinimiser(new RooMcmcUniform2Seq(2000,50,2)); // num of steps in final tree, burn in, inverse step size

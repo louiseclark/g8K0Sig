@@ -3,14 +3,14 @@
 
 void GetSweightsPlotsPi0() {
 	
-	std::string path = "/home/louise/g8K0Sig/code/sWeights3/out_all_pi0_binned/";
-	//std::string path = "/home/louise/g8K0Sig/code/sWeights3_test7/out_all_pi0_binned/";
+	std::string path = "/home/louise/g8K0Sig/code/sWeights3_test19/out_all_pi0_binned/";
 	auto topDir = opendir(path.c_str());
 	struct dirent *eGammaDir;
 	
-	//TString outdir = "/home/louise/g8K0Sig/AnalysisSummary/html/images/sWeights/";
-	std::string outdir = "/home/louise/public_html/html/images/st0/sWeights/";
+	std::string outdir = "/home/louise/public_html/html/images/st19/sWeights/";
 	gStyle->SetOptStat(0);
+	int ebin = 0;
+	int thbin = 0;
 	
 	// read the Egamma directories in the topDir
 	while (eGammaDir=readdir(topDir)) {
@@ -24,6 +24,7 @@ void GetSweightsPlotsPi0() {
 			std::string eGammaPath = path + eGammaDir->d_name;
 			auto dir = opendir(eGammaPath.c_str());
 			struct dirent *costhDir;
+			thbin = 0;
 					
 			// read the costh directories in the Egamma dir
 			while (costhDir=readdir(dir)) {
@@ -50,12 +51,12 @@ void GetSweightsPlotsPi0() {
 					TPaveText *st = (TPaveText*) c1->GetPrimitive(textName.c_str());
 					st->Delete();
 										
-					TPaveText* tit = (TPaveText*) c1->GetPrimitive("title");
+					//TPaveText* tit = (TPaveText*) c1->GetPrimitive("title");
 					//tit->SetTextColor(kWhite);
 					//tit->InsertText("Test 1"); //dirStr2.c_str());
 					
-					TH1D* h1 = (TH1D*) c1->GetPrimitive("frame_a261eb0");
-					h1->GetXaxis()->SetTitle("test");
+					//TH1D* h1 = (TH1D*) c1->GetPrimitive("frame_a261eb0");
+					//h1->GetXaxis()->SetTitle("test");
 					
 					gPad->Modified();
 					gPad->Update();
@@ -63,8 +64,10 @@ void GetSweightsPlotsPi0() {
 					
 					TString outFilename = outdir+dirStr2+"pi0.png";
 					h->SaveAs(outFilename);
+					thbin++;
 					
 				}
+				ebin++;
 			}
 		}
 	}

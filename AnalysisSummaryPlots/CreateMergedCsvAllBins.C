@@ -3,10 +3,10 @@
 
 void CreateMergedCsvAllBins() {
 		
-	std::string paths[] = {"/home/louise/g8K0Sig/code/AllObsAmp3_test13/out1/",
-						 "/home/louise/g8K0Sig/code/AllObsAmp3_test14/out1/",
-						 "/home/louise/g8K0Sig/code/AllObsAmp3_test15/out1/",
-						 "/home/louise/g8K0Sig/code/AllObsAmp3_test16/out1/"};
+	std::string paths[] = {"/home/louise/g8K0Sig/code/AllObsAmp3_test19/out1/",
+						 "/home/louise/g8K0Sig/code/AllObsAmp3_test20/out1/",
+						 "/home/louise/g8K0Sig/code/AllObsAmp3_test21/out1/",
+						 "/home/louise/g8K0Sig/code/AllObsAmp3_test22/out1/"};
 						 
 	ofstream outfile;
     outfile.open(paths[0]+"MergedCsvAllBins.csv");

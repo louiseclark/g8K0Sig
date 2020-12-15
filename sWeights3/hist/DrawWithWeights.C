@@ -7,16 +7,25 @@
   //TString weightsDir = "/home/louise/g8K0Sig/code/sWeights3/";
   //TString outdir = "/home/louise/public_html/html/images/weighted/";
   // Systematic tests
-  TString weightsDir = "/home/louise/g8K0Sig/code/sWeights3_test8/";
-  TString outdir = "/home/louise/public_html/html/images/st8/weighted/";
+  TString weightsDir = "/home/louise/g8K0Sig/code/sWeights3_test22/";
+  TString outdir = "/home/louise/public_html/html/images/st22/weighted/";
   
   // Define bins
   Double_t eBinLimits[] = {1.1, 1.35, 1.6, 1.85, 2.1};
   int iBinNums[] = {6,8,5,2};
-  Double_t thBinLimits[4][9] = { {-1.0, -0.622, -0.39, -0.146, 0.054, 0.298, 1.0},
-								 {-1.0, -0.465, -0.275, -0.135, 0.005, 0.165, 0.345, 0.535, 1.0},
-								 {-1.0, -0.175, 0.035, 0.295, 0.505, 1.0},
-								 {-1.0, 0.155, 1.0}
+
+  // bins tests 0 to 18
+  //Double_t thBinLimits[4][9] = { {-1.0, -0.622, -0.39, -0.146, 0.054, 0.298, 1.0},
+//								 {-1.0, -0.465, -0.275, -0.135, 0.005, 0.165, 0.345, 0.535, 1.0},
+//								 {-1.0, -0.175, 0.035, 0.295, 0.505, 1.0},
+//								 {-1.0, 0.155, 1.0}
+//							   };
+							   
+  // bins tests >=19
+  Double_t thBinLimits[4][9] = { {-1.0, -0.6225, -0.4225, -0.1375, 0.0725, 0.3525, 1.0},
+								 {-1.0, -0.5175, -0.3125, -0.1625, -0.0075, 0.1575, 0.3325, 0.5525, 1.0},
+								 {-1.0, -0.1125, 0.1325, 0.3675, 0.5425, 1.0},
+								 {-1.0, 0.145, 1.0}
 							   };
 							   
   // hists							   

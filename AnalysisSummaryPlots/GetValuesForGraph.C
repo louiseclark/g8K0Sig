@@ -3,11 +3,16 @@
 
 void GetValuesForGraph() {
 	
-	std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3_test16/out1/";
-	std::string pref = "st16";
+	bool dummy = false;
+	bool flipX = true;
+	bool flipY = true;
+	std::string opt = "flipXY";
+	
+	std::string path = "/home/louise/g8K0Sig/code/AllObsAmp3_test19_new/out1/";
+	std::string pref = "st1";
 
 	ofstream outfile;
-	outfile.open(path+pref+"ValuesForGraph.txt");
+	outfile.open(path+pref+opt+"ValuesForGraph.txt");
 	
 	std::string burnIn = "50";
 	
@@ -51,10 +56,29 @@ void GetValuesForGraph() {
 					std::string drawStr = obs[obsNum]+">>hist";
 					std::string entryStr = "Entry$>="+burnIn;
 					MCMCTree->Draw(drawStr.c_str(),entryStr.c_str());
+					Double_t graphVal;
+					Double_t graphUnc;
 					
-					xString = xString + binName + ",";
-					yString = yString + hist->GetMean() + ",";
-					yErrString = yErrString + hist->GetRMS() + ",";
+					if (dummy) {
+						graphVal = 0.0;
+						graphUnc = 0.0;
+					} else if (flipY) {
+						graphVal = -1 * hist->GetMean();
+						graphUnc = hist->GetRMS();
+					} else {
+						graphVal = hist->GetMean();
+						graphUnc = hist->GetRMS();						
+					}
+					Double_t graphX;
+					if (flipX) {
+						graphX = -1.0 * std::stod(binName);
+					}
+					else {
+						graphX = std::stod(binName);
+					}
+					xString = xString + graphX + ",";
+					yString = yString + graphVal + ",";
+					yErrString = yErrString + graphUnc + ",";
 				}
 			}
 			yString = yString.substr(0, yString.length()-1) + "]";
